@@ -245,3 +245,137 @@ BEGIN
 END;
 
 EXEC CALCULAR_INGRESOS_POR_SEDE(1);
+
+--7. Procedimiento para registrar una nueva mesa
+CREATE OR REPLACE PROCEDURE REGISTRAR_MESA (
+    id_mesa IN NUMBER,
+    nombre_mesa IN VARCHAR2,
+    num_espacios IN NUMBER,
+    id_reservacion IN NUMBER
+) AS
+    mesa_existente NUMBER;
+BEGIN
+    -- Aca vamos a ver si la mesa existe o no, porque si ya existe estarios duplicando la key
+    SELECT COUNT(*) INTO mesa_existente
+    FROM MESA
+    WHERE ID_MESA = id_mesa;
+
+    IF mesa_existente > 0 THEN
+        DBMS_OUTPUT.PUT_LINE('Error: El ID de la mesa ya existe.');
+    ELSE
+        -- Aca insertamos le mensa
+        IF id_reservacion IS NULL THEN
+            INSERT INTO MESA (ID_MESA, NOMBRE_MESA, NUM_ESPACIOS) 
+            VALUES (id_mesa, nombre_mesa, num_espacios);
+        ELSE
+            INSERT INTO MESA (ID_MESA, NOMBRE_MESA, NUM_ESPACIOS, ID_RESERVACION) 
+            VALUES (id_mesa, nombre_mesa, num_espacios, id_reservacion);
+        END IF;
+        
+        DBMS_OUTPUT.PUT_LINE('Mesa registrada exitosamente');
+    END IF;
+END;
+
+
+BEGIN 
+    REGISTRAR_MESA(3, 'Mesa 3', 4, NULL); 
+END;
+
+--8. Procedimiento para eliminar una reservacion
+
+/*puede dar eror si no hay una reservacion con ese id*/
+CREATE OR REPLACE PROCEDURE ELIMINAR_RESERVACION (
+    id_reservacion IN NUMBER
+) AS
+BEGIN
+    DELETE FROM RESERVACION
+    WHERE ID_RESERVACION = id_reservacion;
+    
+    DBMS_OUTPUT.PUT_LINE('Reservación eliminada exitosamente');
+END;
+
+
+EXEC ELIMINAR_RESERVACION(1);
+
+--9. Procedimiento para registrar una nueva sede
+
+CREATE OR REPLACE PROCEDURE REGISTRAR_SEDE (
+    id_sede IN NUMBER,
+    nombre_sede IN VARCHAR2,
+    direccion IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO SEDE (ID_SEDE, NOMBRE_SEDE, DIRECCION)
+    VALUES (id_sede, nombre_sede, direccion);
+    
+    DBMS_OUTPUT.PUT_LINE('Sede registrada exitosamente');
+END;
+
+EXEC REGISTRAR_SEDE(3, 'Sede Sur', 'Dirección 3');
+
+--10. Procedimiento para eliminar una mesa
+
+CREATE OR REPLACE PROCEDURE ELIMINAR_MESA (
+    id_mesa IN NUMBER
+) AS
+BEGIN
+    DELETE FROM MESA
+    WHERE ID_MESA = id_mesa;
+
+    DBMS_OUTPUT.PUT_LINE('Mesa eliminada exitosamente');
+END;
+
+
+BEGIN 
+    ELIMINAR_MESA(2); 
+END;
+
+--11. Procedimiento para para obtener el total de ventas por usuario
+CREATE OR REPLACE PROCEDURE OBTENER_TOTAL_VENTAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) AS
+    total_ventas NUMBER;
+BEGIN
+    SELECT SUM(f.TOTAL)
+    INTO total_ventas
+    FROM FACTURA f
+    WHERE f.ID_USUARIO = id_usuario;
+
+    DBMS_OUTPUT.PUT_LINE('Total de ventas para el usuario ' || id_usuario || ': $' || total_ventas);
+END;
+
+
+BEGIN 
+    OBTENER_TOTAL_VENTAS_POR_USUARIO(1); 
+END;
+
+--12. Procedimiento para obtener el numero total de mesas y listar ID de mesas por sede
+
+CREATE OR REPLACE PROCEDURE OBTENER_TOTAL_Y_LISTAR_MESES_POR_SEDE (
+    id_sede IN NUMBER
+) AS
+    total_mesas NUMBER;
+BEGIN
+    
+    SELECT COUNT(*) INTO total_mesas
+    FROM MESA
+    JOIN RESERVACION ON MESA.ID_RESERVACION = RESERVACION.ID_RESERVACION
+    WHERE RESERVACION.ID_SEDE = id_sede;
+
+    DBMS_OUTPUT.PUT_LINE('total de mesas en la sede con ID ' || id_sede || ': ' || total_mesas);
+
+    
+    FOR mesa IN (
+        SELECT MESA.ID_MESA 
+        FROM MESA
+        JOIN RESERVACION ON MESA.ID_RESERVACION = RESERVACION.ID_RESERVACION
+        WHERE RESERVACION.ID_SEDE = id_sede
+    ) LOOP
+        DBMS_OUTPUT.PUT_LINE('ID Mesa: ' || mesa.ID_MESA);
+    END LOOP;
+END;
+
+BEGIN 
+    OBTENER_TOTAL_Y_LISTAR_MESES_POR_SEDE(1); 
+END;
+
