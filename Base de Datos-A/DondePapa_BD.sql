@@ -3,9 +3,14 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
---Creacion del usuario y asignacion de roles
+/*Creacion del usuario y asignacion de roles*/
+--Asignacion de permisos para crear el usuario 
 alter session set "_ORACLE_SCRIPT"=true;
+
+--Creacion del usuario
 CREATE USER usuarioDondePapa IDENTIFIED BY "4567.";
+
+--Asignacion de permisos de usuario 
 GRANT CONNECT, RESOURCE TO usuarioDondePapa;
 GRANT DBA TO usuarioDondePapa;
 
@@ -254,4 +259,90 @@ INSERT INTO usuarioDondePapa.venta (id_factura, id_plato, precio, cantidad) VALU
 INSERT INTO usuarioDondePapa.venta (id_factura, id_plato, precio, cantidad) VALUES (3, 15, 330000, 1);
 INSERT INTO usuarioDondePapa.venta (id_factura, id_plato, precio, cantidad) VALUES (3, 12, 45000, 1);
 INSERT INTO usuarioDondePapa.venta (id_factura, id_plato, precio, cantidad) VALUES (3, 10, 15000, 3);
+
+
+/*Procesos Almacenados*/
+
+
+
+
+/*Vistas*/
+
+--Vista #1 para mostrar todos los platos disponibles por categoria a la que pertencen
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_platos_disponibles AS
+SELECT 
+    p.id_plato,
+    p.descripcion AS plato_descripcion,
+    p.detalle,
+    p.precio,
+    p.existencias,
+    p.ruta_imagen,
+    c.descripcion AS categoria_descripcion,
+    p.disponible
+FROM 
+    usuarioDondePapa.plato p
+JOIN 
+    usuarioDondePapa.categoria c ON p.id_categoria = c.id_categoria
+WHERE 
+    p.disponible = 1;
+
+--Vista #2 Muestra información adicional sobre los usuarios que las realizaron.información adicional sobre los usuarios que las realizaron.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_facturas_con_usuarios AS
+SELECT 
+    f.id_factura,
+    f.fecha,
+    f.total,
+    f.estado,
+    u.nombre,
+    u.apellidos,
+    u.correo,
+    u.telefono
+FROM 
+    usuarioDondePapa.factura f
+JOIN 
+    usuarioDondePapa.usuario u ON f.id_usuario = u.id_usuario;
+    
+--Vista #3 Esta vista muestra las ventas realizadas, incluyendo información del plato vendido y la factura asociada.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_ventas_detalles AS
+SELECT 
+    v.id_venta,
+    f.fecha,
+    p.descripcion AS plato_descripcion,
+    p.precio,
+    v.cantidad,
+    v.precio AS precio_venta,
+    f.total AS total_factura
+FROM 
+    usuarioDondePapa.venta v
+JOIN 
+    usuarioDondePapa.factura f ON v.id_factura = f.id_factura
+JOIN 
+    usuarioDondePapa.plato p ON v.id_plato = p.id_plato;
+
+--Vista #4 Esta vista muestra los usuarios junto con los roles asignados a cada uno.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_usuarios_roles AS
+SELECT 
+    u.id_usuario,
+    u.username,
+    u.nombre,
+    u.apellidos,
+    r.nombre AS rol
+FROM 
+    usuarioDondePapa.usuario u
+JOIN 
+    usuarioDondePapa.rol r ON u.id_usuario = r.id_usuario;
+
+--Vista #5 Esta vista muestra todas las reservaciones con información de contacto.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_reservaciones AS
+SELECT 
+    r.id_reservacion,
+    r.nombre,
+    r.hora,
+    r.numero_de_mesa,
+    r.contacto
+FROM 
+    usuarioDondePapa.reservacion r;
+
+
+
 
