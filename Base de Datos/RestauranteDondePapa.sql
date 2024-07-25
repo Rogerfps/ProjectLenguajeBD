@@ -214,25 +214,22 @@ CREATE OR REPLACE PROCEDURE OBTENER_RESERVACIONES_POR_SEDE (
     nombre_sede VARCHAR(100);
 BEGIN
     -- SELECT NOMBRE_SEDE INTO nombre_sede FROM SEDE WHERE ID_SEDE = id_sede;
-    FOR sede_rec IN (SELECT NOMBRE_SEDE FROM SEDE WHERE ID_SEDE = id_sede) LOOP
-        nombre_sede := sede_rec.NOMBRE_SEDE;
+    SELECT NOMBRE_SEDE INTO nombre_sede FROM SEDE WHERE ID_SEDE = id_sede AND ROWNUM = 1;
     
-        FOR reservaciones_sede IN (SELECT * FROM RESERVACION WHERE ID_SEDE = id_sede) LOOP
-            DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
-            DBMS_OUTPUT.PUT_LINE('Id reservacion: ' || reservaciones_sede.ID_RESERVACION);
-            DBMS_OUTPUT.PUT_LINE('Sede: ' || nombre_sede);
-            DBMS_OUTPUT.PUT_LINE('A nombre de: ' || reservaciones_sede.NOMBRE);
-            DBMS_OUTPUT.PUT_LINE('Hora: ' || reservaciones_sede.HORA);
-            DBMS_OUTPUT.PUT_LINE('Mesa reservada: ' || reservaciones_sede.ID_MESA);
-            DBMS_OUTPUT.PUT_LINE('Contacto del cliente' || reservaciones_sede.CONTACTO);
-            DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
-        END LOOP; 
-    END LOOP;
+    FOR reservaciones_sede IN (SELECT * FROM RESERVACION WHERE ID_SEDE = id_sede) LOOP
+        DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
+        DBMS_OUTPUT.PUT_LINE('Id reservacion: ' || reservaciones_sede.ID_RESERVACION);
+        DBMS_OUTPUT.PUT_LINE('Sede: ' || nombre_sede);
+        DBMS_OUTPUT.PUT_LINE('A nombre de: ' || reservaciones_sede.NOMBRE);
+        DBMS_OUTPUT.PUT_LINE('Hora: ' || reservaciones_sede.HORA);
+        DBMS_OUTPUT.PUT_LINE('Mesa reservada: ' || reservaciones_sede.ID_MESA);
+        DBMS_OUTPUT.PUT_LINE('Contacto del cliente' || reservaciones_sede.CONTACTO);
+        DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
+    END LOOP; 
 END;
-
+-- Similar al error del procedimiento 2, se realizaron unos cambios para que el
+-- procedimiento 4 cumpla su función.
 EXEC OBTENER_RESERVACIONES_POR_SEDE(1);
-
-DROP PROCEDURE OBTENER_RESERVACIONES_POR_SEDE;
 
 --5. Procedimiento para obtener ventas por plato
 CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_PLATO (
@@ -240,21 +237,21 @@ CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_PLATO (
 ) AS
     nombre_plato PLATO.NOMBRE_PLATO%TYPE;
 BEGIN
-	SELECT NOMBRE_PLATO INTO nombre_plato FROM PLATO WHERE ID_PLATO= id_plato;
+	SELECT NOMBRE_PLATO INTO nombre_plato FROM PLATO WHERE ID_PLATO= id_plato AND ROWNUM = 1;
     
     FOR ventas_platos IN (SELECT * FROM VENTA WHERE ID_PLATO = id_plato) LOOP
         DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
         DBMS_OUTPUT.PUT_LINE('Id venta: ' || ventas_platos.ID_VENTA);
         DBMS_OUTPUT.PUT_LINE('Factura de venta: ' || ventas_platos.ID_FACTURA);
-        DBMS_OUTPUT.PUT_LINE('Plato: ' || nombre_plato);
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || NOMBRE_PLATO);
         DBMS_OUTPUT.PUT_LINE('Cantidad: ' || ventas_platos.CANTIDAD);
-		DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
-	END LOOP; 
+        DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
+    END LOOP; 
 END;
 
 EXEC OBTENER_VENTAS_POR_PLATO(1);
 
-
+DROP PROCEDURE OBTENER_VENTAS_POR_PLATO;
 --6. Procedimiento para calcular los ingresos por sede
 CREATE OR REPLACE PROCEDURE CALCULAR_INGRESOS_POR_SEDE (
     id_sede IN NUMBER
