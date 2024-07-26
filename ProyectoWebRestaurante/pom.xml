@@ -16,7 +16,7 @@
     <name>ProyectoWebRestaurante</name>
     <description>Proyecto Lenguaje de Base de Datos. Donde Papá</description>
     <properties>
-        <java.version>22</java.version>
+        <java.version>21</java.version>
     </properties>
     
     <dependencies>
