@@ -403,3 +403,284 @@ Insert into USUARIODONDEPAPA.VENTA (ID_VENTA,ID_FACTURA,ID_PLATO,PRECIO,CANTIDAD
 	  REFERENCES "USUARIODONDEPAPA"."FACTURA" ("ID_FACTURA") ENABLE;
   ALTER TABLE "USUARIODONDEPAPA"."VENTA" ADD CONSTRAINT "FK_VENTAS_PLATO" FOREIGN KEY ("ID_PLATO")
 	  REFERENCES "USUARIODONDEPAPA"."PLATO" ("ID_PLATO") ENABLE;
+
+/*Procedimientos Almacenados*/
+SET SERVEROUTPUT ON;
+
+-- 1. Procedimiento para obtener los platos disponibles
+CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
+AS
+BEGIN
+    FOR platos_disponibles IN (SELECT descripcion FROM usuarioDondePapa.plato WHERE disponible = 1) LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || platos_disponibles.descripcion);
+    END LOOP; 
+END;
+
+EXEC OBTENER_PLATOS_DISPONIBLES;
+
+-- 2. Procedimiento para calcular el total de una factura
+CREATE OR REPLACE PROCEDURE CALCULAR_TOTAL_FACTURA (
+    id_factura IN NUMBER,
+    total OUT NUMBER
+) 
+AS
+BEGIN
+    SELECT SUM(precio * cantidad) INTO total
+    FROM usuarioDondePapa.venta
+    WHERE id_factura = id_factura;
+END;
+
+
+DECLARE
+    total NUMBER;
+BEGIN
+    CALCULAR_TOTAL_FACTURA(1, total);
+    DBMS_OUTPUT.PUT_LINE('Total de la factura: ' || total);
+END;
+
+-- 3. Procedimiento para obtener facturas por usuario
+CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) 
+AS
+BEGIN
+    FOR facturas IN (SELECT * FROM usuarioDondePapa.factura WHERE id_usuario = id_usuario) LOOP
+        DBMS_OUTPUT.PUT_LINE('ID Factura: ' || facturas.id_factura || ', Fecha: ' || facturas.fecha || ', Total: ' || facturas.total || ', Estado: ' || facturas.estado);
+    END LOOP;
+END;
+
+EXEC OBTENER_FACTURAS_POR_USUARIO(1);
+
+-- 4. Procedimiento para insertar nueva categoria
+CREATE OR REPLACE PROCEDURE INSERTAR_CATEGORIA (
+    descripcion IN VARCHAR2,
+    disponible IN NUMBER,
+    ruta_imagen IN VARCHAR2
+) 
+AS
+BEGIN
+    INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen)
+    VALUES (descripcion, disponible, ruta_imagen);
+END;
+
+
+BEGIN
+    INSERTAR_CATEGORIA('Bebidas', 1, 'ruta/a/imagen');
+END;
+
+-- 5. Procedimiento para obtener ventas por plato
+CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_PLATO (
+    id_plato IN NUMBER
+) 
+AS
+BEGIN
+    FOR ventas IN (SELECT * FROM usuarioDondePapa.venta WHERE id_plato = id_plato) LOOP
+        DBMS_OUTPUT.PUT_LINE('ID Venta: ' || ventas.id_venta || ', ID Factura: ' || ventas.id_factura || ', Precio: ' || ventas.precio || ', Cantidad: ' || ventas.cantidad);
+    END LOOP;
+END;
+
+EXEC OBTENER_VENTAS_POR_PLATO(1);
+
+-- 6. Procedimiento para insertar un nuevo plato
+CREATE OR REPLACE PROCEDURE INSERTAR_PLATO (
+    id_categoria IN NUMBER,
+    descripcion IN VARCHAR2,
+    detalle IN VARCHAR2,
+    precio IN NUMBER,
+    existencias IN NUMBER,
+    ruta_imagen IN VARCHAR2,
+    disponible IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO usuarioDondePapa.plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
+    VALUES (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible);
+END;
+
+BEGIN
+    INSERTAR_PLATO(1, 'Plato Ejemplo', 'Detalle del Plato', 100, 10, 'ruta/a/imagen', 1);
+END;
+
+-- 7. Procedimiento para actualizar categoria
+CREATE OR REPLACE PROCEDURE ACTUALIZAR_CATEGORIA (
+    id_categoria IN NUMBER,
+    descripcion IN VARCHAR2,
+    disponible IN NUMBER,
+    ruta_imagen IN VARCHAR2
+) 
+AS
+BEGIN
+    UPDATE usuarioDondePapa.categoria
+    SET descripcion = descripcion,
+        disponible = disponible,
+        ruta_imagen = ruta_imagen
+    WHERE id_categoria = id_categoria;
+END;
+
+
+BEGIN
+    ACTUALIZAR_CATEGORIA(1, 'Bebidas Actualizadas', 1, 'ruta/a/nueva/imagen');
+END;
+
+-- 8. Procedimiento para eliminar una reservacion
+CREATE OR REPLACE PROCEDURE ELIMINAR_RESERVACION (
+    id_reservacion IN NUMBER
+) 
+AS
+BEGIN
+    DELETE FROM usuarioDondePapa.reservacion
+    WHERE reservacion = id_reservacion;
+END;
+
+
+BEGIN
+    ELIMINAR_RESERVACION(1);
+END;
+
+-- 9. Procedimiento para insertar nuevo plato
+CREATE OR REPLACE PROCEDURE INSERTAR_NUEVO_PLATO (
+    id_categoria IN NUMBER,
+    descripcion IN VARCHAR2,
+    detalle IN VARCHAR2,
+    precio IN NUMBER,
+    existencias IN NUMBER,
+    ruta_imagen IN VARCHAR2,
+    disponible IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO usuarioDondePapa.plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
+    VALUES (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible);
+END;
+
+BEGIN
+    INSERTAR_NUEVO_PLATO(1, 'Otro Plato Ejemplo', 'Otro Detalle del Plato', 120, 20, 'ruta/a/otra/imagen', 1);
+END;
+
+-- 10. Procedimiento para eliminar un plato 
+CREATE OR REPLACE PROCEDURE ELIMINAR_PLATO (
+    id_plato IN NUMBER
+) 
+AS
+BEGIN
+    DELETE FROM usuarioDondePapa.plato
+    WHERE id_plato = id_plato;
+END;
+
+
+BEGIN
+    ELIMINAR_PLATO(1);
+END;
+
+-- 11. Procedimiento para obtener el total de ventas por usuario
+CREATE OR REPLACE PROCEDURE OBTENER_TOTAL_VENTAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) 
+AS
+BEGIN
+    FOR ventas IN (SELECT f.id_usuario, SUM(v.precio * v.cantidad) AS total_ventas
+                   FROM usuarioDondePapa.venta v
+                   JOIN usuarioDondePapa.factura f ON v.id_factura = f.id_factura
+                   WHERE f.id_usuario = id_usuario
+                   GROUP BY f.id_usuario) LOOP
+        DBMS_OUTPUT.PUT_LINE('ID Usuario: ' || ventas.id_usuario || ', Total Ventas: ' || ventas.total_ventas);
+    END LOOP;
+END;
+
+EXEC OBTENER_TOTAL_VENTAS_POR_USUARIO(1);
+
+--12. Procedimiento para modificar la disponibilidad de un plato
+CREATE OR REPLACE PROCEDURE MODIFICAR_DISPONIBILIDAD_PLATO (
+    id_plato IN NUMBER,
+    disponible IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE usuarioDondePapa.plato
+    SET disponible = disponible
+    WHERE id_plato = id_plato;
+END;
+
+BEGIN
+    MODIFICAR_DISPONIBILIDAD_PLATO(1, 0);
+END;
+
+/*Vistas*/
+
+--Vista #1 para mostrar todos los platos disponibles por categoria a la que pertencen
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_platos_disponibles AS
+SELECT 
+    p.id_plato,
+    p.descripcion AS plato_descripcion,
+    p.detalle,
+    p.precio,
+    p.existencias,
+    p.ruta_imagen,
+    c.descripcion AS categoria_descripcion,
+    p.disponible
+FROM 
+    usuarioDondePapa.plato p
+JOIN 
+    usuarioDondePapa.categoria c ON p.id_categoria = c.id_categoria
+WHERE 
+    p.disponible = 1;
+
+--Vista #2 Muestra informaci�n adicional sobre los usuarios que las realizaron.informaci�n adicional sobre los usuarios que las realizaron.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_facturas_con_usuarios AS
+SELECT 
+    f.id_factura,
+    f.fecha,
+    f.total,
+    f.estado,
+    u.nombre,
+    u.apellidos,
+    u.correo,
+    u.telefono
+FROM 
+    usuarioDondePapa.factura f
+JOIN 
+    usuarioDondePapa.usuario u ON f.id_usuario = u.id_usuario;
+    
+--Vista #3 Esta vista muestra las ventas realizadas, incluyendo informaci�n del plato vendido y la factura asociada.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_ventas_detalles AS
+SELECT 
+    v.id_venta,
+    f.fecha,
+    p.descripcion AS plato_descripcion,
+    p.precio,
+    v.cantidad,
+    v.precio AS precio_venta,
+    f.total AS total_factura
+FROM 
+    usuarioDondePapa.venta v
+JOIN 
+    usuarioDondePapa.factura f ON v.id_factura = f.id_factura
+JOIN 
+    usuarioDondePapa.plato p ON v.id_plato = p.id_plato;
+
+--Vista #4 Esta vista muestra los usuarios junto con los roles asignados a cada uno.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_usuarios_roles AS
+SELECT 
+    u.id_usuario,
+    u.username,
+    u.nombre,
+    u.apellidos,
+    r.nombre AS rol
+FROM 
+    usuarioDondePapa.usuario u
+JOIN 
+    usuarioDondePapa.rol r ON u.id_usuario = r.id_usuario;
+
+--Vista #5 Esta vista muestra todas las reservaciones con informaci�n de contacto.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_reservaciones AS
+SELECT 
+    r.id_reservacion,
+    r.nombre,
+    r.hora,
+    r.numero_de_mesa,
+    r.contacto
+FROM 
+    usuarioDondePapa.reservacion r;
+
+
+
