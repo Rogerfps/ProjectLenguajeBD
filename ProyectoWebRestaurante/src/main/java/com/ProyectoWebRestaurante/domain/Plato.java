@@ -1,6 +1,5 @@
 package com.ProyectoWebRestaurante.domain;
 
-import com.ProyectoWebRestaurante.domain.Categoria;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
