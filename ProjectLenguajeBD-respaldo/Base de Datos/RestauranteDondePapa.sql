@@ -13,7 +13,8 @@ CREATE USER usuarioDondePapa IDENTIFIED BY "4567.";
 --Asignacion de permisos de usuario 
 GRANT CONNECT, RESOURCE TO usuarioDondePapa;
 GRANT DBA TO usuarioDondePapa;
-GRANT CREATE SESSION TO usuarioDondePapa;
+
+
 
 /*Creacion de tablas*/
 
@@ -24,8 +25,6 @@ CREATE TABLE categoria (
     disponible NUMBER(1),
     ruta_imagen VARCHAR2(1024)
 );
-
-SELECT * FROM CATEGORIA;
 
 -- Crear la tabla de platos
 CREATE TABLE plato (
@@ -85,11 +84,6 @@ CREATE TABLE rol (
     nombre VARCHAR2(20),
     id_usuario NUMBER
 );
-
-SELECT * FROM usuario;
-
-AL
-
 
 -- Crear la tabla de transacciones
 CREATE TABLE transacciones (
@@ -474,30 +468,6 @@ SELECT
     r.contacto
 FROM 
     reservacion r;
-
-----------------------
-SELECT
-    s.sid AS session_id,
-    s.serial# AS session_serial#,
-    o.object_name,
-    o.object_type,
-    s.blocking_session
-FROM
-    v$lock l
-JOIN
-    v$session s
-ON
-    l.sid = s.sid
-JOIN
-    dba_objects o
-ON
-    l.id1 = o.object_id
-WHERE
-    l.block = 1;
-
-
-
-
 
 
 

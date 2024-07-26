@@ -5,7 +5,6 @@
 package com.ProyectoWebRestaurante.domain;
 
 
-import com.ProyectoWebRestaurante.domain.Plato;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

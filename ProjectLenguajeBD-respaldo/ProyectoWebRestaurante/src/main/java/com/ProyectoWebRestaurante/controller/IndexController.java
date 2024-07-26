@@ -1,6 +1,5 @@
 package com.ProyectoWebRestaurante.controller;
 
-
 import com.ProyectoWebRestaurante.service.PlatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
