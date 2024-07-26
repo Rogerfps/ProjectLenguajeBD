@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class RegistroServiceImpl implements RegistroService {
 
@@ -144,6 +147,19 @@ public class RegistroServiceImpl implements RegistroService {
         return model;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(RegistroServiceImpl.class);
+    
+    private void logUsuarioAttributes(Usuario usuario) {
+        logger.debug("Username: {}", usuario.getUsername());
+        logger.debug("Password: {}", usuario.getPassword());
+        logger.debug("Nombre: {}", usuario.getNombre());
+        logger.debug("Apellidos: {}", usuario.getApellidos());
+        logger.debug("Correo: {}", usuario.getCorreo());
+        logger.debug("Telefono: {}", usuario.getTelefono());
+        logger.debug("Ruta Imagen: {}", usuario.getRutaImagen());
+        logger.debug("Activo: {}", usuario.isActivo());
+    }
+    
     private String demeClave() {
         String tira = "ABCDEFGHIJKLMNOPQRSTUXYZabcdefghijklmnopqrstuvwxyz0123456789_*+-";
         String clave = "";
