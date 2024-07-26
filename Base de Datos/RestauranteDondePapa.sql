@@ -154,9 +154,9 @@ SET SERVEROUTPUT ON;
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
 AS
 BEGIN
-	FOR platos_disponibles IN (SELECT NOMBRE_PLATO FROM PLATO WHERE DISPONIBLE = 'SI') LOOP
-        DBMS_OUTPUT.PUT_LINE('Plato: ' || platos_disponibles.NOMBRE_PLATO);
-	END LOOP; 
+    FOR platos_disponibles IN (SELECT descripcion FROM usuarioDondePapa.plato WHERE disponible = 1) LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || platos_disponibles.descripcion);
+    END LOOP; 
 END;
 
 EXEC OBTENER_PLATOS_DISPONIBLES;
