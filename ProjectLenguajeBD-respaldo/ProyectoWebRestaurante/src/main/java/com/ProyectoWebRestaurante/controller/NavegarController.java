@@ -1,7 +1,5 @@
 package com.ProyectoWebRestaurante.controller;
 
-
-
 import com.ProyectoWebRestaurante.domain.Categoria;
 import com.ProyectoWebRestaurante.service.CategoriaService;
 import com.ProyectoWebRestaurante.service.PlatoService;
@@ -14,38 +12,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/filtrar")
-public class FiltrarController {
+@RequestMapping("/navegar")
+public class NavegarController {
 
     @Autowired
     private PlatoService platoService;
     @Autowired
     private CategoriaService categoriaService;
 
-    
-
     @GetMapping("/listado")
     public String listado(Model model) {
         var lista = platoService.getPlatos(false);
         model.addAttribute("platos", lista);
 
-        return "/filtrar/listado";
+        var categorias = categoriaService.getCategorias(false);
+        model.addAttribute("categorias", categorias);
+
+        return "/navegar/listado";
 
     }
 
-    @PostMapping("/query1")
-    public String consultaJPA(
-            @RequestParam(value = "precioInf") double precioInf,
-            @RequestParam(value = "precioSup") double precioSup,
-            Model model) {
-        var lista = platoService.consultaJPA(precioInf, precioSup);
+    @GetMapping("/listado/{idCategoria}")
+    public String modifica(Categoria categoria, Model model) {
+        categoria = categoriaService.getCategoria(categoria);
+        var lista = categoria.getPlatos();
         model.addAttribute("platos", lista);
-        model.addAttribute("precioInf", precioInf);
-        model.addAttribute("precioSup", precioSup);
+        var categorias = categoriaService.getCategorias(false);
+        model.addAttribute("categorias", categorias);
 
-        return "/filtrar/listado";
-
+        return "/navegar/listado";
     }
-    
 
+    
+    
+//     @GetMapping("/navegar")
+//    public String listado3(Model model) {
+//        var lista = platoService.getPlatos(false);
+//        model.addAttribute("platos", lista);
+//
+//        return "navegar";
+//
+//    }
 }
