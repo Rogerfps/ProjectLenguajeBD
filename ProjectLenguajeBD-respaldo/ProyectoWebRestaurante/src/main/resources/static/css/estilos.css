@@ -1,0 +1,218 @@
+/* General styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 0.5rem 1rem;
+  color: white;
+}
+
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+.navbar .cart-icon {
+  width: 40px; /* Ajusta esto al tamaño deseado */
+  height: auto; /* Mantén la proporción */
+}
+
+
+/* Adjust logo size */
+.navbar .logo img {
+  width: 150px; /* Ajusta esto al tamaño deseado */
+  height: auto; /* Mantén la proporción */
+}
+.location .map iframe {
+    width: 100%; /* Esto hará que el mapa ocupe todo el ancho del contenedor */
+    height: 400px; /* Ajusta esto a la altura que desees */
+    border: 0;
+    display: block; /* Esto asegurará que el mapa ocupe su propia línea */
+}
+
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .cart {
+  display: flex;
+  align-items: center;
+}
+
+
+/* Main header */
+.live-music {
+  text-align: center;
+  padding: 1rem;
+  background-color: #e9ecef;
+}
+
+.live-music img {
+  max-width: 50%;
+  height: auto;
+  display: block; /* Asegura que la imagen no tenga elementos en línea al lado */
+  margin: 0 auto; /* Centra la imagen si no ocupa todo el ancho */
+}
+
+.main-header {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Section - Recommendations */
+.recommendations {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background-color: #f1f1f1;
+}
+
+.recommendations .card {
+  width: 30%;
+  margin: 1rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  background-color: white;
+}
+
+.recommendations .card img {
+  width: 100%;
+  height: auto;
+}
+
+.recommendations .card h2 {
+  color: #333;
+}
+
+/* Location section */
+.location {
+  padding: 1rem;
+}
+
+.location .map {
+  width: 100%;
+  height: 300px; 
+  background-color: #ccc; 
+}
+.map iframe {
+    width: 100%;
+    height: 400px; 
+}
+
+
+/* Live music section */
+.live-music {
+  padding: 1rem;
+  background-color: #e9ecef;
+}
+
+.live-music img {
+  width: 100%;
+  height: auto;
+}
+
+/* Footer de la página */
+
+footer{
+    background-color: #fff;
+    color: var(--black-c);
+    padding-top: 55px;
+}
+
+footer ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wrap-footer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+}
+
+element-footer h5{
+    margin: 1rem 0;
+}
+
+.text-element-footer{
+    line-height: 1.6;
+    
+}
+
+.text-element-footer li a{
+    color: var(--main-c);
+    text-decoration: none;
+}
+
+.rrss-element-footer ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rrss-element-footer img{
+    width: 45px;
+}
+.rrss-element-footer li{
+    margin-right: 1rem;
+}
+
+.footer-creds {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 0 1rem;
+    color: #576171;
+    font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 1rem auto; 
+}
+
+.legal-creds ul{
+    display: flex;
+    flex-direction: column; 
+    padding: 0;
+}
+
+.legal-creds ul li{
+    color: #576171;
+    text-decoration: none; 
+}
+
+.legal-creds ul li a{
+    color: #576171;
+}
+/* Responsive Design para que se adapte a otros dispositivos*/
+@media (max-width: 768px) {
+    .wrap-footer {
+        grid-template-columns: 1fr; 
+    }
+
+    .legal-creds ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+
+
