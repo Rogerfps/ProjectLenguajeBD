@@ -682,5 +682,306 @@ SELECT
 FROM 
     usuarioDondePapa.reservacion r;
 
+--Cursores 1.
+CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
+AS
+    CURSOR platos_disponibles_cur IS
+        SELECT descripcion FROM usuarioDondePapa.plato WHERE disponible = 1;
+    v_descripcion usuarioDondePapa.plato.descripcion%TYPE;
+BEGIN
+    OPEN platos_disponibles_cur;
+    LOOP
+        FETCH platos_disponibles_cur INTO v_descripcion;
+        EXIT WHEN platos_disponibles_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || v_descripcion);
+    END LOOP;
+    CLOSE platos_disponibles_cur;
+END;
 
+--Cursores 2.
+CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) 
+AS
+    CURSOR facturas_cur IS
+        SELECT * FROM usuarioDondePapa.factura WHERE id_usuario = id_usuario;
+    v_factura usuarioDondePapa.factura%ROWTYPE;
+BEGIN
+    OPEN facturas_cur;
+    LOOP
+        FETCH facturas_cur INTO v_factura;
+        EXIT WHEN facturas_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Factura: ' || v_factura.id_factura || ', Fecha: ' || v_factura.fecha || ', Total: ' || v_factura.total || ', Estado: ' || v_factura.estado);
+    END LOOP;
+    CLOSE facturas_cur;
+END;
 
+--Cursores 3.
+CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_PLATO (
+    id_plato IN NUMBER
+) 
+AS
+    CURSOR ventas_cur IS
+        SELECT * FROM usuarioDondePapa.venta WHERE id_plato = id_plato;
+    v_venta usuarioDondePapa.venta%ROWTYPE;
+BEGIN
+    OPEN ventas_cur;
+    LOOP
+        FETCH ventas_cur INTO v_venta;
+        EXIT WHEN ventas_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Venta: ' || v_venta.id_venta || ', ID Factura: ' || v_venta.id_factura || ', Precio: ' || v_venta.precio || ', Cantidad: ' || v_venta.cantidad);
+    END LOOP;
+    CLOSE ventas_cur;
+END;
+
+--Cursores 4.
+CREATE OR REPLACE PROCEDURE OBTENER_TOTAL_VENTAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) 
+AS
+    CURSOR ventas_total_cur IS
+        SELECT f.id_usuario, SUM(v.precio * v.cantidad) AS total_ventas
+        FROM usuarioDondePapa.venta v
+        JOIN usuarioDondePapa.factura f ON v.id_factura = f.id_factura
+        WHERE f.id_usuario = id_usuario
+        GROUP BY f.id_usuario;
+    v_id_usuario usuarioDondePapa.factura.id_usuario%TYPE;
+    v_total_ventas NUMBER;
+BEGIN
+    OPEN ventas_total_cur;
+    LOOP
+        FETCH ventas_total_cur INTO v_id_usuario, v_total_ventas;
+        EXIT WHEN ventas_total_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Usuario: ' || v_id_usuario || ', Total Ventas: ' || v_total_ventas);
+    END LOOP;
+    CLOSE ventas_total_cur;
+END;
+
+--Cursores 5.
+CREATE OR REPLACE PROCEDURE OBTENER_RESERVACIONES (
+    id_reservacion IN NUMBER
+) 
+AS
+    CURSOR reservaciones_cur IS
+        SELECT * FROM usuarioDondePapa.reservacion WHERE id_reservacion = id_reservacion;
+    v_reservacion usuarioDondePapa.reservacion%ROWTYPE;
+BEGIN
+    OPEN reservaciones_cur;
+    LOOP
+        FETCH reservaciones_cur INTO v_reservacion;
+        EXIT WHEN reservaciones_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Reservacion: ' || v_reservacion.id_reservacion || ', Nombre: ' || v_reservacion.nombre || ', Hora: ' || v_reservacion.hora || ', Numero de Mesa: ' || v_reservacion.numero_de_mesa || ', Contacto: ' || v_reservacion.contacto);
+    END LOOP;
+    CLOSE reservaciones_cur;
+END;
+
+--Cursores 6.
+CREATE OR REPLACE PROCEDURE OBTENER_CLIENTES_POR_ESTADO (
+    estado IN NUMBER
+) 
+AS
+    CURSOR clientes_cursor IS
+        SELECT ID_USUARIO, NOMBRE, CORREO
+        FROM USUARIODONDEPAPA.USUARIO
+        WHERE ACTIVO = estado;
+    
+    cliente_record clientes_cursor%ROWTYPE;
+BEGIN
+    OPEN clientes_cursor;
+    LOOP
+        FETCH clientes_cursor INTO cliente_record;
+        EXIT WHEN clientes_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Usuario: ' || cliente_record.ID_USUARIO || ', Nombre: ' || cliente_record.NOMBRE || ', Correo: ' || cliente_record.CORREO);
+    END LOOP;
+    CLOSE clientes_cursor;
+END;
+
+--Cursores 7.
+CREATE OR REPLACE PROCEDURE OBTENER_PRODUCTOS_POR_CATEGORIA (
+    id_categoria IN NUMBER
+) 
+AS
+    CURSOR productos_cursor IS
+        SELECT ID_PLATO, DESCRIPCION, PRECIO
+        FROM USUARIODONDEPAPA.PLATO
+        WHERE ID_CATEGORIA = id_categoria;
+    
+    producto_record productos_cursor%ROWTYPE;
+BEGIN
+    OPEN productos_cursor;
+    LOOP
+        FETCH productos_cursor INTO producto_record;
+        EXIT WHEN productos_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || producto_record.ID_PLATO || ', Descripción: ' || producto_record.DESCRIPCION || ', Precio: ' || producto_record.PRECIO);
+    END LOOP;
+    CLOSE productos_cursor;
+END;
+
+--Cursores 8.
+CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_FECHA (
+    fecha IN DATE
+) 
+AS
+    CURSOR reservas_cursor IS
+        SELECT ID_RESERVACION, NOMBRE, HORA, NUMERO_DE_MESA
+        FROM USUARIODONDEPAPA.RESERVACION
+        WHERE TRUNC(HORA) = fecha;
+    
+    reserva_record reservas_cursor%ROWTYPE;
+BEGIN
+    OPEN reservas_cursor;
+    LOOP
+        FETCH reservas_cursor INTO reserva_record;
+        EXIT WHEN reservas_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Reserva: ' || reserva_record.ID_RESERVACION || ', Nombre: ' || reserva_record.NOMBRE || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA);
+    END LOOP;
+    CLOSE reservas_cursor;
+END;
+
+--Cursores 9.
+CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_FECHA (
+    fecha IN DATE
+) 
+AS
+    CURSOR ventas_cursor IS
+        SELECT ID_VENTA, ID_PLATO, CANTIDAD, PRECIO
+        FROM USUARIODONDEPAPA.VENTA
+        WHERE EXISTS (
+            SELECT 1
+            FROM USUARIODONDEPAPA.FACTURA
+            WHERE FACTURA.ID_FACTURA = VENTA.ID_FACTURA
+            AND TRUNC(FACTURA.FECHA) = fecha
+        );
+    
+    venta_record ventas_cursor%ROWTYPE;
+BEGIN
+    OPEN ventas_cursor;
+    LOOP
+        FETCH ventas_cursor INTO venta_record;
+        EXIT WHEN ventas_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Venta: ' || venta_record.ID_VENTA || ', ID Plato: ' || venta_record.ID_PLATO || ', Cantidad: ' || venta_record.CANTIDAD || ', Precio: ' || venta_record.PRECIO);
+    END LOOP;
+    CLOSE ventas_cursor;
+END;
+
+--Cursores 10.
+CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_ESTADO (
+    estado IN NUMBER
+) 
+AS
+    CURSOR facturas_cursor IS
+        SELECT ID_FACTURA, FECHA, TOTAL
+        FROM USUARIODONDEPAPA.FACTURA
+        WHERE ESTADO = estado;
+    
+    factura_record facturas_cursor%ROWTYPE;
+BEGIN
+    OPEN facturas_cursor;
+    LOOP
+        FETCH facturas_cursor INTO factura_record;
+        EXIT WHEN facturas_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Factura: ' || factura_record.ID_FACTURA || ', Fecha: ' || factura_record.FECHA || ', Total: ' || factura_record.TOTAL);
+    END LOOP;
+    CLOSE facturas_cursor;
+END;
+
+--Cursores 11.
+CREATE OR REPLACE PROCEDURE OBTENER_TRANSACCIONES_POR_TIPO (
+    tipo_transaccion IN VARCHAR2
+) 
+AS
+    CURSOR transacciones_cursor IS
+        SELECT ID_TRANSACCION, MONTO, FECHA, DESCRIPCION
+        FROM USUARIODONDEPAPA.TRANSACCIONES
+        WHERE TIPO = tipo_transaccion;
+    
+    transaccion_record transacciones_cursor%ROWTYPE;
+BEGIN
+    OPEN transacciones_cursor;
+    LOOP
+        FETCH transacciones_cursor INTO transaccion_record;
+        EXIT WHEN transacciones_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Transacción: ' || transaccion_record.ID_TRANSACCION || ', Monto: ' || transaccion_record.MONTO || ', Fecha: ' || transaccion_record.FECHA || ', Descripción: ' || transaccion_record.DESCRIPCION);
+    END LOOP;
+    CLOSE transacciones_cursor;
+END;
+
+--Cursores 12.
+CREATE OR REPLACE PROCEDURE OBTENER_USUARIOS_ACTIVOS
+AS
+    CURSOR usuarios_cursor IS
+        SELECT ID_USUARIO, NOMBRE, CORREO
+        FROM USUARIODONDEPAPA.USUARIO
+        WHERE ACTIVO = 1;
+    
+    usuario_record usuarios_cursor%ROWTYPE;
+BEGIN
+    OPEN usuarios_cursor;
+    LOOP
+        FETCH usuarios_cursor INTO usuario_record;
+        EXIT WHEN usuarios_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Usuario: ' || usuario_record.ID_USUARIO || ', Nombre: ' || usuario_record.NOMBRE || ', Correo: ' || usuario_record.CORREO);
+    END LOOP;
+    CLOSE usuarios_cursor;
+END;
+
+--Cursores 13.
+CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES
+AS
+    CURSOR platos_cursor IS
+        SELECT ID_PLATO, DESCRIPCION, PRECIO, EXISTENCIAS
+        FROM USUARIODONDEPAPA.PLATO
+        WHERE DISPONIBLE = 1;
+    
+    plato_record platos_cursor%ROWTYPE;
+BEGIN
+    OPEN platos_cursor;
+    LOOP
+        FETCH platos_cursor INTO plato_record;
+        EXIT WHEN platos_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || plato_record.ID_PLATO || ', Descripción: ' || plato_record.DESCRIPCION || ', Precio: ' || plato_record.PRECIO || ', Existencias: ' || plato_record.EXISTENCIAS);
+    END LOOP;
+    CLOSE platos_cursor;
+END;
+
+--Cursores 14.
+CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_USUARIO (
+    id_usuario IN NUMBER
+) 
+AS
+    CURSOR facturas_cursor IS
+        SELECT ID_FACTURA, FECHA, TOTAL, ESTADO
+        FROM USUARIODONDEPAPA.FACTURA
+        WHERE ID_USUARIO = id_usuario;
+    
+    factura_record facturas_cursor%ROWTYPE;
+BEGIN
+    OPEN facturas_cursor;
+    LOOP
+        FETCH facturas_cursor INTO factura_record;
+        EXIT WHEN facturas_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Factura: ' || factura_record.ID_FACTURA || ', Fecha: ' || factura_record.FECHA || ', Total: ' || factura_record.TOTAL || ', Estado: ' || factura_record.ESTADO);
+    END LOOP;
+    CLOSE facturas_cursor;
+END;
+
+--Cursores 15.
+CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_NOMBRE (
+    nombre_cliente IN VARCHAR2
+) 
+AS
+    CURSOR reservas_cursor IS
+        SELECT ID_RESERVACION, HORA, NUMERO_DE_MESA, CONTACTO
+        FROM USUARIODONDEPAPA.RESERVACION
+        WHERE NOMBRE = nombre_cliente;
+    
+    reserva_record reservas_cursor%ROWTYPE;
+BEGIN
+    OPEN reservas_cursor;
+    LOOP
+        FETCH reservas_cursor INTO reserva_record;
+        EXIT WHEN reservas_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Reservación: ' || reserva_record.ID_RESERVACION || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA || ', Contacto: ' || reserva_record.CONTACTO);
+    END LOOP;
+    CLOSE reservas_cursor;
+END;

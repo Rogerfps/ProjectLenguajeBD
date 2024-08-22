@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     
@@ -16,7 +16,7 @@
     <name>ProyectoWebRestaurante</name>
     <description>Proyecto Lenguaje de Base de Datos. Donde Papá</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>20</java.version>
     </properties>
     
     <dependencies>
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
-            <version>23.4.0.24.05</version>
+            <version>23.5.0.24.07</version>
         </dependency>
  
     </dependencies>
