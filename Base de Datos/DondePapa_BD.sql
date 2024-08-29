@@ -402,7 +402,6 @@ BEGIN
     WHERE id_factura = id_factura;
 END;
 
-
 DECLARE
     total NUMBER;
 BEGIN
@@ -508,14 +507,14 @@ END;
 
 // 8. Procedimiento para eliminar una reservacion
 CREATE OR REPLACE PROCEDURE ELIMINAR_RESERVACION (
-    id_reservacion IN NUMBER
+    p_id_reservacion IN NUMBER
 ) 
 AS
 BEGIN
     DELETE FROM usuarioDondePapa.reservacion
-    WHERE reservacion = id_reservacion;
+    WHERE id_reservacion = p_id_reservacion;
 END;
-
+/
 
 BEGIN
     ELIMINAR_RESERVACION(1);
@@ -547,17 +546,22 @@ END;
 
 // 10. Procedimiento para eliminar un plato 
 CREATE OR REPLACE PROCEDURE ELIMINAR_PLATO (
-    id_plato IN NUMBER
+    p_id_plato IN NUMBER
 ) 
 AS
 BEGIN
-    DELETE FROM usuarioDondePapa.plato
-    WHERE id_plato = id_plato;
-END;
+    -- Primero, eliminar las referencias en la tabla ventas
+    DELETE FROM usuarioDondePapa.venta
+    WHERE id_plato = p_id_plato;
 
+    -- Luego, eliminar el plato en la tabla plato
+    DELETE FROM usuarioDondePapa.plato
+    WHERE id_plato = p_id_plato;
+END;
+/
 
 BEGIN
-    ELIMINAR_PLATO(1);
+    ELIMINAR_PLATO(55);
 END;
 
 --------------------------------------------------------
@@ -597,6 +601,312 @@ BEGIN
     MODIFICAR_DISPONIBILIDAD_PLATO(1, 0);
 END;
 
+
+--------------------------------------------------------
+
+// 13. Filtrar por precion superior y inferior.
+CREATE OR REPLACE PROCEDURE FILTRAR_PLATOS_POR_PRECIO (
+    p_precio_inf IN NUMBER,
+    p_precio_sup IN NUMBER
+) 
+AS
+BEGIN
+    FOR r_plato IN (SELECT descripcion, precio 
+                    FROM usuarioDondePapa.plato 
+                    WHERE precio BETWEEN p_precio_inf AND p_precio_sup 
+                    ORDER BY descripcion ASC) 
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || r_plato.descripcion || ', Precio: ' || r_plato.precio);
+    END LOOP;
+END;
+/
+
+BEGIN
+    -- Prueba del procedimiento con un rango de precios
+    FILTRAR_PLATOS_POR_PRECIO(1000, 5000);
+END;
+/
+--------------------------------------------------------
+--14. Procedimiento para actualizar el precio de un plato.
+
+CREATE OR REPLACE PROCEDURE ACTUALIZAR_PRECIO_PLATO (
+    p_id_plato IN NUMBER,
+    p_nuevo_precio IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE usuarioDondePapa.plato
+    SET precio = p_nuevo_precio
+    WHERE id_plato = p_id_plato;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para actualizar el precio de un plato específico
+    ACTUALIZAR_PRECIO_PLATO(
+        1,          -- ID del plato 
+        1500      -- Nuevo precio que asignar al plato
+    );
+END;
+/
+
+SELECT * FROM usuarioDondePapa.plato WHERE id_plato = 1;
+
+--------------------------------------------------------
+--15. Procedimiento para obtener la lista de categorías disponibles
+CREATE OR REPLACE PROCEDURE OBTENER_CATEGORIAS_DISPONIBLES 
+AS
+BEGIN
+    FOR categorias IN (SELECT descripcion FROM usuarioDondePapa.categoria WHERE disponible = 1) LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || categorias.descripcion);
+    END LOOP;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para obtener las categorías disponibles
+    OBTENER_CATEGORIAS_DISPONIBLES;
+END;
+/
+--------------------------------------------------------
+--16.  Procedimiento para contar el número de platos por categoría
+
+CREATE OR REPLACE PROCEDURE CONTAR_PLATOS_POR_CATEGORIA 
+AS
+BEGIN
+    FOR categoria IN (SELECT c.descripcion, COUNT(p.id_plato) AS numero_platos 
+                      FROM usuarioDondePapa.categoria c
+                      JOIN usuarioDondePapa.plato p ON c.id_categoria = p.id_categoria
+                      GROUP BY c.descripcion) LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || categoria.descripcion || ', Número de Platos: ' || categoria.numero_platos);
+    END LOOP;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para contar los platos por categoría
+    CONTAR_PLATOS_POR_CATEGORIA;
+END;
+/
+
+--------------------------------------------------------
+--17. Procedimiento para insertar un nuevo usuario
+
+CREATE OR REPLACE PROCEDURE INSERTAR_USUARIO (
+    p_username IN VARCHAR2,
+    p_password IN VARCHAR2,
+    p_nombre IN VARCHAR2,
+    p_apellidos IN VARCHAR2,
+    p_correo IN VARCHAR2,
+    p_telefono IN VARCHAR2,
+    p_ruta_imagen IN VARCHAR2,
+    p_activo IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO usuarioDondePapa.usuario (username, password, nombre, apellidos, correo, telefono, ruta_imagen, activo)
+    VALUES (p_username, p_password, p_nombre, p_apellidos, p_correo, p_telefono, p_ruta_imagen, p_activo);
+END;
+/
+
+BEGIN
+    -- Prueba del procedimiento insertando un nuevo usuario
+    INSERTAR_USUARIO(
+        'jdoe',                 -- Username del usuario
+        'password123',          -- Contraseña del usuario
+        'John',                 -- Nombre del usuario
+        'Doe',                  -- Apellidos del usuario
+        'john.doe@email.com',   -- Correo electrónico del usuario
+        '555-1234',             -- Teléfono del usuario
+        '/images/jdoe.png',     -- imagen del usuario
+        1                       -- Activo (1 = sí, 0 = no)
+    );
+END;
+/
+
+SELECT * FROM usuarioDondePapa.usuario WHERE username = 'jdoe';
+
+SELECT * FROM USUARIO;
+
+BEGIN
+    -- Prueba del procedimiento insertando un nuevo usuario
+    INSERTAR_USUARIO(
+        'JPeverest',                -- Username del usuario
+        'password123',              -- Contraseña del usuario
+        'Juan',                     -- Nombre del usuario
+        'Perez',                    -- Apellido del usuario
+        'juan.perez@email.com',     -- Correo electrónico del usuario
+        '555-1234',                 -- Teléfono del usuario
+        '/images/JPeverest.jpeg',   -- Contraseña del usuario
+        1
+    );
+END;
+/
+
+SELECT * FROM usuarioDondePapa.usuario WHERE correo = 'juan.perez@email.com';
+
+--------------------------------------------------------
+--18. Procedimiento para eliminar una factura.
+CREATE OR REPLACE PROCEDURE ELIMINAR_FACTURA (
+    p_id_factura IN NUMBER
+) 
+AS
+BEGIN
+    -- Eliminar las ventas asociadas a la factura
+    DELETE FROM usuarioDondePapa.venta
+    WHERE id_factura = p_id_factura;
+
+    -- Eliminar la factura
+    DELETE FROM usuarioDondePapa.factura
+    WHERE id_factura = p_id_factura;
+END;
+
+BEGIN
+    -- Prueba del procedimiento eliminando una factura específica
+    ELIMINAR_FACTURA(1); 
+END;
+
+--------------------------------------------------------
+--19. Obtener Platos Más Vendidos
+CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_MAS_VENDIDOS 
+AS
+BEGIN
+    FOR grupo_platos IN (
+        SELECT p.descripcion, SUM(v.cantidad) AS total_vendido
+        FROM plato p
+        JOIN venta v ON p.id_plato = v.id_plato
+        GROUP BY p.descripcion
+        ORDER BY total_vendido DESC
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || grupo_platos.descripcion || ', Total vendido: ' || grupo_platos.total_vendido);
+    END LOOP;
+END;
+
+-------------------------------------------------------
+--20. Obtener usuario más activos
+CREATE OR REPLACE PROCEDURE OBTENER_USUARIO_MAS_ACTIVO
+AS
+    nombre USUARIO.NOMBRE%TYPE;
+	apellidos USUARIO.APELLIDOS%TYPE;
+	total_compras NUMBER;
+BEGIN
+   SELECT nombre, apellidos, count_compras
+    INTO nombre, apellidos, total_compras
+    FROM (
+        SELECT u.nombre, u.apellidos, COUNT(f.id_factura) AS count_compras
+        FROM usuario u
+        JOIN factura f ON u.id_usuario = f.id_usuario
+        GROUP BY u.nombre, u.apellidos
+        ORDER BY count_compras DESC
+    )
+    WHERE ROWNUM = 1;
+
+    DBMS_OUTPUT.PUT_LINE('Usuario: ' || nombre || ' ' || apellidos || ', Total compras: ' || total_compras);
+END;
+
+-------------------------------------------------------
+--21. Generar reportes de ventas por categoría
+CREATE OR REPLACE PROCEDURE REPORTE_VENTAS_POR_CATEGORIAS
+AS
+BEGIN
+    FOR grupo_categorias IN (
+        SELECT c.descripcion, SUM(v.cantidad * v.precio) AS total_ventas
+        FROM categoria c
+        JOIN plato p ON c.id_categoria = p.id_categoria
+        JOIN venta v ON p.id_plato = v.id_plato
+        GROUP BY c.descripcion
+        ORDER BY total_ventas DESC
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || grupo_categorias.descripcion || ', Total ventas: ' || grupo_categorias.total_ventas);
+    END LOOP;
+END;
+
+-------------------------------------------------------
+--22. Restablecer contraseña de usuario
+CREATE OR REPLACE PROCEDURE restablecer_contrasena (
+    v_usuario VARCHAR2,
+    p_nueva_contrasena VARCHAR2
+)
+AS
+BEGIN
+    UPDATE usuario
+    SET password = p_nueva_contrasena
+    WHERE username = v_usuario;
+END;
+
+BEGIN
+    restablecer_contrasena('allan','12345');
+END;
+
+-------------------------------------------------------
+--23. Modificar una reserva
+CREATE OR REPLACE PROCEDURE modificar_reserva (
+    id_reservacion_modificar NUMBER,
+    nueva_hora TIMESTAMP,
+    nuevo_numero_mesa NUMBER
+)
+AS
+	mesa_disponible NUMBER;
+BEGIN
+    SELECT COUNT(*)
+    INTO mesa_disponible
+    FROM reservacion
+    WHERE numero_de_mesa = nuevo_numero_mesa 
+    AND hora = nueva_hora;
+
+	IF mesa_disponible > 0 THEN
+    	RAISE_APPLICATION_ERROR(-20101, 'No se puede modificar la reservacion, porque ya existe una reservacion en ese horario');
+	ELSE 
+        UPDATE reservacion
+    	SET hora = nueva_hora, numero_de_mesa = nuevo_numero_mesa
+    	WHERE id_reservacion = id_reservacion_modificar;
+    END IF;
+END;
+
+BEGIN
+    modificar_reserva(1,TO_TIMESTAMP('2024-07-01 13:00:00', 'YYYY-MM-DD HH24:MI:SS'),2);
+END;
+
+-------------------------------------------------------
+--24. Obtener disponibilidad de mesas
+CREATE OR REPLACE PROCEDURE obtener_disponibilidad_mesas (
+    p_hora TIMESTAMP
+)
+AS
+BEGIN
+    FOR v_mesa IN (
+        SELECT numero_de_mesa
+        FROM mesa
+        WHERE numero_de_mesa NOT IN (
+            SELECT numero_de_mesa
+            FROM reservacion
+            WHERE hora BETWEEN p_hora - INTERVAL '1' HOUR AND p_hora + INTERVAL '1' HOUR
+        )
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Mesa disponible: ' || v_mesa.numero_de_mesa);
+    END LOOP;
+END;
+
+-------------------------------------------------------
+--25. Actualizar salarios en base a la cantidad de años laborados
+CREATE OR REPLACE PROCEDURE actualizar_salario_por_antiguedad
+IS
+BEGIN
+    UPDATE employees
+    SET salary = salary * 1.05
+    WHERE (SYSDATE - hire_date) / 365 BETWEEN 1 AND 5;
+
+    UPDATE employees
+    SET salary = salary * 1.10
+    WHERE (SYSDATE - hire_date) / 365 BETWEEN 6 AND 10;
+
+    UPDATE employees
+    SET salary = salary * 1.15
+    WHERE (SYSDATE - hire_date) / 365 > 10;
+    
+    DBMS_OUTPUT.PUT_LINE('Salarios actualizados en función de los años de servicio.');
+END;
+
 --------------------------------------------------------
 -- VISTAS
 --------------------------------------------------------
@@ -621,7 +931,7 @@ WHERE
     
 --------------------------------------------------------
 
-// 2. Muestra informacion adicional sobre los usuarios que las realizaron.informaciï¿½n adicional sobre los usuarios que las realizaron.
+// 2. Muestra informacion adicional sobre los usuarios que las realizaron.informaci?n adicional sobre los usuarios que las realizaron.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_facturas_con_usuarios AS
 SELECT 
     f.id_factura,
@@ -639,7 +949,7 @@ JOIN
     
 --------------------------------------------------------
     
-// 3. Esta vista muestra las ventas realizadas, incluyendo informaciï¿½n del plato vendido y la factura asociada.
+// 3. Esta vista muestra las ventas realizadas, incluyendo informaci?n del plato vendido y la factura asociada.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_ventas_detalles AS
 SELECT 
     v.id_venta,
@@ -673,7 +983,7 @@ JOIN
 
 --------------------------------------------------------
 
-// 5. Esta vista muestra todas las reservaciones con informaciï¿½n de contacto.
+// 5. Esta vista muestra todas las reservaciones con informaci?n de contacto.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_reservaciones AS
 SELECT 
     r.id_reservacion,
@@ -683,6 +993,245 @@ SELECT
     r.contacto
 FROM 
     usuarioDondePapa.reservacion r;
+--------------------------------------------------------
+// 6. Esta vista muestra los ingresos diarios del restaurante, agrupados por fecha.
+
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_ingresos_diarios AS
+SELECT 
+    TO_CHAR(f.fecha, 'YYYY-MM-DD') AS fecha,
+    SUM(f.total) AS total_ingresos
+FROM 
+    usuarioDondePapa.factura f
+GROUP BY 
+    TO_CHAR(f.fecha, 'YYYY-MM-DD')
+ORDER BY 
+    fecha DESC;
+
+
+--------------------------------------------------------
+//  7. Esta vista muestra los platos más vendidos, ordenados por la cantidad vendida.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_top_platos_vendidos AS
+SELECT 
+    p.id_plato,
+    p.descripcion AS plato_descripcion,
+    SUM(v.cantidad) AS total_vendido
+FROM 
+    usuarioDondePapa.venta v
+JOIN 
+    usuarioDondePapa.plato p ON v.id_plato = p.id_plato
+GROUP BY 
+    p.id_plato, p.descripcion
+ORDER BY 
+    total_vendido DESC;
+--------------------------------------------------------
+//8. Esta vista muestra a los clientes más frecuentes, ordenados por el número de facturas emitidas a su nombre.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_clientes_frecuentes AS
+SELECT 
+    u.id_usuario,
+    u.nombre,
+    u.apellidos,
+    COUNT(f.id_factura) AS total_facturas
+FROM 
+    usuarioDondePapa.usuario u
+JOIN 
+    usuarioDondePapa.factura f ON u.id_usuario = f.id_usuario
+GROUP BY 
+    u.id_usuario, u.nombre, u.apellidos
+ORDER BY 
+    total_facturas DESC;
+    
+--------------------------------------------------------
+// 9. Esta vista muestra todos los productos (platos) que actualmente no tienen existencias disponibles.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_productos_no_disponibles AS
+SELECT 
+    p.id_plato,
+    p.descripcion AS plato_descripcion,
+    p.detalle,
+    p.precio,
+    p.ruta_imagen,
+    c.descripcion AS categoria_descripcion
+FROM 
+    usuarioDondePapa.plato p
+JOIN 
+    usuarioDondePapa.categoria c ON p.id_categoria = c.id_categoria
+WHERE 
+    p.existencias = 0 
+    OR p.disponible = 0
+ORDER BY 
+    p.descripcion ASC;
+
+--------------------------------------------------------
+// 10. Esta vista muestra los usuarios que tienen facturas pendientes de pago.
+CREATE OR REPLACE VIEW usuarioDondePapa.vista_categorias_mas_vendidas AS
+SELECT 
+    c.id_categoria,
+    c.descripcion AS categoria_descripcion,
+    SUM(v.cantidad) AS total_vendido,
+    SUM(v.precio * v.cantidad) AS ingresos_generados
+FROM 
+    usuarioDondePapa.categoria c
+JOIN 
+    usuarioDondePapa.plato p ON c.id_categoria = p.id_categoria
+JOIN 
+    usuarioDondePapa.venta v ON p.id_plato = v.id_plato
+GROUP BY 
+    c.id_categoria, c.descripcion
+ORDER BY 
+    total_vendido DESC;
+
+--------------------------------------------------------
+-- TRIGGERS
+--------------------------------------------------------
+-- 1. Trigger para controlar existencias de platos
+
+CREATE OR REPLACE TRIGGER trg_plato_update_stock
+  AFTER INSERT OR UPDATE OR DELETE
+  ON venta
+  FOR EACH ROW
+BEGIN
+  UPDATE PLATO
+  SET EXISTENCIAS = EXISTENCIAS - :NEW.CANTIDAD
+  WHERE ID_PLATO = :NEW.ID_PLATO;
+END;
+
+SELECT * FROM PLATO WHERE id_plato=5;
+INSERT INTO venta (id_factura, id_plato, precio, cantidad) VALUES (3, 5, 45000, 3);
+
+--------------------------------------------------------
+-- 2. Trigger para controlar las ventas de platos segun stock
+
+CREATE OR REPLACE TRIGGER trg_verificar_stock
+  BEFORE INSERT OR UPDATE ON venta
+  FOR EACH ROW
+DECLARE
+  cantidad_en_stock NUMBER;
+BEGIN
+  SELECT EXISTENCIAS INTO cantidad_en_stock
+  FROM plato
+  WHERE id_plato = :NEW.id_plato;
+
+  IF :NEW.cantidad > cantidad_en_stock THEN
+    RAISE_APPLICATION_ERROR(-20001, 'No hay suficientes platos en stock para completar la venta.');
+  END IF;
+END;
+
+SELECT * FROM PLATO WHERE id_plato=4;
+INSERT INTO venta (id_factura, id_plato, precio, cantidad) VALUES (3, 4, 45000, 8);
+UPDATE plato
+SET existencias = 10 WHERE id_plato = 4;
+
+--------------------------------------------------------
+-- 3. Trigger para registrar transacciones de facturas en estado 1
+
+CREATE OR REPLACE TRIGGER TRG_FACTURA_TRANSACCION
+  AFTER INSERT OR UPDATE OF ESTADO
+  ON FACTURA
+  FOR EACH ROW
+BEGIN
+  IF :new.ESTADO = 1 THEN
+    INSERT INTO TRANSACCIONES (
+      ID_USUARIO,
+      TIPO,
+      MONTO,
+      FECHA,
+      DESCRIPCION
+    )
+    VALUES (
+      :new.ID_USUARIO,
+      'VENTA', -- Puedes ajustar el tipo según tus necesidades
+      :new.TOTAL,
+      SYSTIMESTAMP,
+      'Factura ' || :new.ID_FACTURA
+    );
+  END IF;
+END;
+
+SELECT * FROM factura;
+SELECT * FROM transacciones;
+UPDATE FACTURA
+SET ESTADO = 1
+WHERE ID_FACTURA=1;
+
+--------------------------------------------------------
+-- 4. Trigger auditoria de reservaciones eliminadas
+
+CREATE TABLE RESERVACION_AUDIT (
+  ID_AUDITORIA NUMBER GENERATED BY DEFAULT AS IDENTITY,
+  ID_RESERVACION NUMBER,
+  NOMBRE VARCHAR2(255),
+  HORA TIMESTAMP(6),
+  NUMERO_DE_MESA NUMBER,
+  CONTACTO VARCHAR2(255),
+  FECHA_ELIMINACION TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+CREATE OR REPLACE TRIGGER TRG_RESERVACION_DELETE
+  AFTER DELETE
+  ON RESERVACION
+  FOR EACH ROW
+BEGIN
+  INSERT INTO RESERVACION_AUDIT (
+    ID_RESERVACION,
+    NOMBRE,
+    HORA,
+    NUMERO_DE_MESA,
+    CONTACTO,
+    FECHA_ELIMINACION
+  )
+  VALUES (
+    :OLD.ID_RESERVACION,
+    :OLD.NOMBRE,
+    :OLD.HORA,
+    :OLD.NUMERO_DE_MESA,
+    :OLD.CONTACTO,
+    SYSTIMESTAMP
+  );
+END;
+
+SELECT * FROM reservacion;
+DELETE reservacion WHERE id_reservacion=2;
+SELECT * FROM RESERVACION_AUDIT;
+
+--------------------------------------------------------
+-- 5. Trigger para evitar una reservacion si choca con otros horarios
+
+CREATE OR REPLACE TRIGGER TRG_RESERVACION_UNIQUE
+  BEFORE INSERT OR UPDATE
+  ON RESERVACION
+  FOR EACH ROW
+DECLARE
+  count_reservaciones NUMBER;
+BEGIN
+  SELECT COUNT(*) 
+  INTO count_reservaciones
+  FROM RESERVACION
+  WHERE NUMERO_DE_MESA = :new.NUMERO_DE_MESA
+  AND HORA = :new.HORA;
+
+  IF count_reservaciones > 0 THEN
+    RAISE_APPLICATION_ERROR(-20005, 'Ya existe una reserva para esa mesa y hora.');
+  END IF;
+END;
+
+SELECT * FROM reservacion;
+
+-- Reserva válida
+BEGIN
+    INSERT INTO RESERVACION (nombre, hora, numero_de_mesa, contacto)
+    VALUES ('John Doe', TO_DATE('2024-08-25 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, '555-1234');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Inserción 1 fallida: ' || SQLERRM);
+END;
+
+--Reserva invalida
+BEGIN
+    INSERT INTO RESERVACION (nombre, hora, numero_de_mesa, contacto)
+    VALUES ('Jane Smith', TO_DATE('2024-08-25 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, '555-5678');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Inserción 2 fallida: ' || SQLERRM);
+END;
 
 --------------------------------------------------------
 -- CURSORES
@@ -704,6 +1253,9 @@ BEGIN
     CLOSE platos_disponibles_cur;
 END;
 
+BEGIN
+    OBTENER_PLATOS_DISPONIBLES;
+END;
 --------------------------------------------------------
 
 // 2.
@@ -724,6 +1276,9 @@ BEGIN
     CLOSE facturas_cur;
 END;
 
+BEGIN
+    OBTENER_FACTURAS_POR_USUARIO(1);  -- ACA SE CAMBIA POR EL VALOR DE USER
+END;
 --------------------------------------------------------
 
 // 3.
@@ -742,6 +1297,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Venta: ' || v_venta.id_venta || ', ID Factura: ' || v_venta.id_factura || ', Precio: ' || v_venta.precio || ', Cantidad: ' || v_venta.cantidad);
     END LOOP;
     CLOSE ventas_cur;
+END;
+
+BEGIN
+    OBTENER_VENTAS_POR_PLATO(2);  -- SE CAMBIA POR EL ID
 END;
 
 --------------------------------------------------------
@@ -769,6 +1328,10 @@ BEGIN
     CLOSE ventas_total_cur;
 END;
 
+BEGIN
+    OBTENER_TOTAL_VENTAS_POR_USUARIO(1);  -- CAMBIAR POR USER
+END;
+
 --------------------------------------------------------
 
 // 5.
@@ -787,6 +1350,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Reservacion: ' || v_reservacion.id_reservacion || ', Nombre: ' || v_reservacion.nombre || ', Hora: ' || v_reservacion.hora || ', Numero de Mesa: ' || v_reservacion.numero_de_mesa || ', Contacto: ' || v_reservacion.contacto);
     END LOOP;
     CLOSE reservaciones_cur;
+END;
+
+BEGIN
+    OBTENER_RESERVACIONES(101);  -- CAMBIAR POR ID RESERVACION
 END;
 
 --------------------------------------------------------
@@ -812,6 +1379,10 @@ BEGIN
     CLOSE clientes_cursor;
 END;
 
+BEGIN
+    OBTENER_CLIENTES_POR_ESTADO(1);  -- CAMBIAR POR EL ESTADO
+END;
+
 --------------------------------------------------------
 
 // 7.
@@ -830,13 +1401,16 @@ BEGIN
     LOOP
         FETCH productos_cursor INTO producto_record;
         EXIT WHEN productos_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || producto_record.ID_PLATO || ', Descripción: ' || producto_record.DESCRIPCION || ', Precio: ' || producto_record.PRECIO);
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || producto_record.ID_PLATO || ', DescripciÃ³n: ' || producto_record.DESCRIPCION || ', Precio: ' || producto_record.PRECIO);
     END LOOP;
     CLOSE productos_cursor;
 END;
 
---------------------------------------------------------
+BEGIN
+    OBTENER_PRODUCTOS_POR_CATEGORIA(2);  -- CAMBIAR ID POR CATEGORIA
+END;
 
+--------------------------------------------------------
 // 8.
 CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_FECHA (
     fecha IN DATE
@@ -856,6 +1430,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Reserva: ' || reserva_record.ID_RESERVACION || ', Nombre: ' || reserva_record.NOMBRE || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA);
     END LOOP;
     CLOSE reservas_cursor;
+END;
+
+BEGIN
+    OBTENER_RESERVAS_POR_FECHA(TO_DATE('2024-07-1', 'YYYY-MM-DD')); -- CAMBIAR FECHA DEFAUL
 END;
 
 --------------------------------------------------------
@@ -885,6 +1463,10 @@ BEGIN
     CLOSE ventas_cursor;
 END;
 
+BEGIN
+    OBTENER_VENTAS_POR_FECHA(TO_DATE('2024-08-21', 'YYYY-MM-DD'));-- CAMBIAR FECHA
+END;
+
 --------------------------------------------------------
 // 10.
 CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_ESTADO (
@@ -905,6 +1487,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Factura: ' || factura_record.ID_FACTURA || ', Fecha: ' || factura_record.FECHA || ', Total: ' || factura_record.TOTAL);
     END LOOP;
     CLOSE facturas_cursor;
+END;
+
+BEGIN
+    OBTENER_FACTURAS_POR_ESTADO(1);  -- CAMBIAR ID POR ESTADO
 END;
 
 --------------------------------------------------------
@@ -929,6 +1515,10 @@ BEGIN
     CLOSE transacciones_cursor;
 END;
 
+BEGIN
+    OBTENER_TRANSACCIONES_POR_TIPO('Pago');  -- CAMBIAR POR EL TIPO DE TRANSACCIONS
+END;
+
 --------------------------------------------------------
 // 12.
 CREATE OR REPLACE PROCEDURE OBTENER_USUARIOS_ACTIVOS
@@ -949,6 +1539,10 @@ BEGIN
     CLOSE usuarios_cursor;
 END;
 
+BEGIN
+    OBTENER_USUARIOS_ACTIVOS;
+END;
+
 --------------------------------------------------------
 // 13.
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES
@@ -967,6 +1561,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Plato: ' || plato_record.ID_PLATO || ', Descripción: ' || plato_record.DESCRIPCION || ', Precio: ' || plato_record.PRECIO || ', Existencias: ' || plato_record.EXISTENCIAS);
     END LOOP;
     CLOSE platos_cursor;
+END;
+
+BEGIN
+    OBTENER_PLATOS_DISPONIBLES;
 END;
 
 --------------------------------------------------------
@@ -991,6 +1589,10 @@ BEGIN
     CLOSE facturas_cursor;
 END;
 
+BEGIN
+    OBTENER_FACTURAS_POR_USUARIO(:id_usuario);
+END;
+
 --------------------------------------------------------
 // 15.
 CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_NOMBRE (
@@ -1013,12 +1615,15 @@ BEGIN
     CLOSE reservas_cursor;
 END;
 
+
+BEGIN
+    OBTENER_RESERVAS_POR_NOMBRE('Juan');
+END;
 --------------------------------------------------------
 -- FUNCIONES
 --------------------------------------------------------
 
 -- 1. Obtener platos por categoría especificada.
-DROP FUNCTION OBTENER_PLATOS_X_CATEGORIA;
 
 CREATE OR REPLACE FUNCTION OBTENER_PLATOS_X_CATEGORIA (
     id_categoria NUMBER -- Dependiendo del valor de la categoria, se mostrarán x platos que pertenezcan a la misma.
@@ -1081,10 +1686,12 @@ SELECT p.id_plato "ID", p.precio "Precio Original",
 FROM PLATO p
 WHERE p.id_plato = 45;
 
--- 3. 
+-- 3. Función para verificar si una mesa está apartada o reservada, esto 
+-- introduciendo el número de la mesa y la fecha del día de la reserva.
+-- **ABIERTO A MEJORAS **
 CREATE OR REPLACE FUNCTION VERIFICAR_DISPONIBILIDAD_MESA (  
     p_numero_mesa IN NUMBER,
-    p_fecha IN DATE,
+    p_fecha IN DATE
 )
 RETURN VARCHAR2
 IS
@@ -1094,30 +1701,417 @@ BEGIN
     INTO v_contador
     FROM RESERVACION
     WHERE numero_de_mesa = p_numero_mesa
-    AND fecha_reserva = p_fecha;
+    AND TRUNC(hora) = p_fecha;
     
     IF v_contador > 0 THEN
         return 'APARTADA';
     ELSE
         return 'DISPONIBLE';
     END IF;
-    
-    RETURN v_disponibilidad;
 END;
 
 SELECT * FROM RESERVACION;
 
-SELECT VERIFICAR_DISPONIBILIDAD_MESA (5, TO_DATE('2024-07-01', 'YYYY-MM-DD'), TO_DATE('12:00', 'HH24:MI')) DISPONIBILIDAD
+SELECT VERIFICAR_DISPONIBILIDAD_MESA(2, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
+FROM DUAL;
+SELECT VERIFICAR_DISPONIBILIDAD_MESA(5, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
 
+-- 4. Función para encontrar el correo afiliado a un usuario específico por medio de su ID.
+CREATE OR REPLACE FUNCTION OBTENER_CORREO_USUARIO (
+    p_id_usuario IN NUMBER
+)
+RETURN VARCHAR2
+IS
+    v_correo VARCHAR2(100);
+BEGIN
+    SELECT CORREO
+    INTO v_correo
+    FROM USUARIO
+    WHERE ID_USUARIO = p_id_usuario;
+    
+    RETURN v_correo;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No se encontró un correo afiliado';
+END;
+
+SELECT username, correo FROM USUARIO;
+
+SELECT OBTENER_CORREO_USUARIO(2) Correo FROM DUAL;
+SELECT OBTENER_CORREO_USUARIO(7) Correo FROM DUAL;
+
+-- 5. Función para obtener el nombre de un plato dependiendo del ID insertado
+CREATE OR REPLACE FUNCTION OBTENER_PLATO_X_ID (
+    p_id_plato IN NUMBER
+) RETURN VARCHAR2
+IS
+    v_plato VARCHAR2(50);
+BEGIN
+    SELECT DESCRIPCION
+    INTO v_plato
+    FROM PLATO
+    WHERE ID_PLATO = p_id_plato;
+    
+    RETURN v_plato;
+EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No encontramos ese plato';
+END;
+
+DROP FUNCTION OBTENER_PLATO_X_ID;
+
+SELECT id_plato, descripcion FROM PLATO;
+
+SELECT OBTENER_PLATO_X_ID(42) Plato FROM DUAL;
+SELECT OBTENER_PLATO_X_ID(85) Plato FROM DUAL;
+
+-- 6. Funcion para mostrar el precio total de una factura con el IVA aplicado.
+CREATE OR REPLACE FUNCTION CALCULAR_IVA_FACTURA (
+    p_id_factura IN NUMBER
+) RETURN NUMBER
+IS
+    v_total_factura NUMBER;
+    v_iva NUMBER(5,2);
+BEGIN
+    v_iva := 0.13;
+    
+    SELECT TOTAL
+    INTO v_total_factura
+    FROM FACTURA
+    WHERE ID_FACTURA = p_id_factura;
+    
+    RETURN v_total_factura * v_iva;
+END;
+
+SELECT f.total TOTAL, CALCULAR_IVA_FACTURA(3) TOTAL_IVA, '13%' AS IVA
+FROM FACTURA f
+WHERE f.id_factura = 3;
+
+-- 7. Función que muestra por medio de DBMS.OUTPUT, una lista de las transacciones
+-- realizadas por un usuario.
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (1, 'Compra', 45.50, TO_DATE('2024-08-15', 'YYYY-MM-DD'), 'Compra de platos.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (2, 'Pago de factura', 120.00, TO_DATE('2024-08-16', 'YYYY-MM-DD'), 'Pago de factura 123.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (3, 'Reembolso', 30.00, TO_DATE('2024-08-17', 'YYYY-MM-DD'), 'Reembolso de reserva.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (1, 'Compra', 75.00, TO_DATE('2024-08-18', 'YYYY-MM-DD'), 'Compra de comida para evento.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (2, 'Compra', 50.00, TO_DATE('2024-08-20', 'YYYY-MM-DD'), 'Compra de bebidas.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (3, 'Compra', 60.00, TO_DATE('2024-08-22', 'YYYY-MM-DD'), 'Compra de almuerzo.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (1, 'Transferencia', 150.00, TO_DATE('2024-08-24', 'YYYY-MM-DD'), 'Transferencia a cuenta externa.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (2, 'Transferencia', 200.00, TO_DATE('2024-08-19', 'YYYY-MM-DD'), 'Transferencia de saldo.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (3, 'Pago de factura', 95.00, TO_DATE('2024-08-21', 'YYYY-MM-DD'), 'Pago de factura 456.');
+INSERT INTO usuarioDondePapa.transacciones (id_usuario, tipo, monto, fecha, descripcion)
+    VALUES (2, 'Reembolso', 40.00, TO_DATE('2024-08-23', 'YYYY-MM-DD'), 'Reembolso de cancelacion.');
+
+CREATE OR REPLACE FUNCTION OBTENER_TRANSACCIONES_X_USUARIO (
+    p_id_usuario IN NUMBER
+)
+RETURN SYS_REFCURSOR
+AS
+    transacciones_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN transacciones_cursor FOR
+        SELECT id_transaccion, tipo, monto, fecha, descripcion
+        FROM TRANSACCIONES
+        WHERE id_usuario = p_id_usuario;
+    RETURN transacciones_cursor;
+END;
+
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_id_transaccion usuarioDondePapa.TRANSACCIONES.id_transaccion%TYPE;
+    v_tipo usuarioDondePapa.TRANSACCIONES.tipo%TYPE;
+    v_monto usuarioDondePapa.TRANSACCIONES.monto%TYPE;
+    v_fecha usuarioDondePapa.TRANSACCIONES.fecha%TYPE;
+    v_descripcion usuarioDondePapa.TRANSACCIONES.descripcion%TYPE;
+BEGIN
+    v_cursor := OBTENER_TRANSACCIONES_X_USUARIO(2);
+    
+    LOOP
+        FETCH v_cursor INTO v_id_transaccion, v_tipo, v_monto, v_fecha, v_descripcion;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Transaccion: ' || v_id_transaccion || CHR(10) ||
+    'Tipo: ' || v_tipo || CHR(10) || 
+    'Monto: ' || v_monto || CHR(10) ||
+    'Fecha: ' || v_fecha || CHR(10) ||
+    'Descripcion: ' || v_descripcion || CHR(10));
+    END LOOP;
+    CLOSE v_cursor;
+END;
+
+-- 8. Funcion que calcula el total de ingresos generados por un producto almacenado en VENTAs
+CREATE OR REPLACE FUNCTION CALCULAR_VENTAS_X_PLATO (
+    p_id_plato NUMBER
+)
+RETURN NUMBER
+IS
+    v_total_ventas NUMBER := 0;
+BEGIN
+    SELECT SUM(CANTIDAD * PRECIO)
+    INTO v_total_ventas
+    FROM VENTA
+    WHERE ID_PLATO = p_id_plato;
+    
+    RETURN NVL(v_total_ventas, 0);
+END;
+
+SELECT CALCULAR_VENTAS_X_PLATO(10) "TOTAL VENTAS" FROM DUAL;
+
+-- 9. Funcionar para calcular el preico promedio de los platos, aunque aparente
+-- innecesario, esto puede ser de ayuda cuando se requiera hacer un análisis 
+-- después de la modificación de precios en productos, ingreso/departura de otros, etc.
+CREATE OR REPLACE FUNCTION CALCULAR_AVG_PRECIO_PLATOS
+RETURN NUMBER
+IS
+    v_avg_precio NUMBER := 0;
+BEGIN
+    SELECT ROUND(AVG(PRECIO), 2) -- Esto para mostrar maximo 2 decimales
+    INTO v_avg_precio
+    FROM PLATO
+    WHERE DISPONIBLE = 1;
+    
+    RETURN NVL(v_avg_precio, 0);
+END;
+
+SELECT CALCULAR_AVG_PRECIO_PLATOS PROMEDIO FROM DUAL;
+
+-- 10. Funcion que imprime por medio de un DMBS.OUTPUT, los platos agotados.
+CREATE OR REPLACE FUNCTION OBTENER_PLATOS_AGOTADO
+RETURN SYS_REFCURSOR
+IS
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN v_cursor FOR
+    SELECT 
+        ID_PLATO, DESCRIPCION, DETALLE, PRECIO, EXISTENCIAS
+    FROM PLATO
+    WHERE
+        EXISTENCIAS = 0;
+        
+    RETURN v_cursor;
+END;
+
+INSERT INTO PLATO (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
+    ('Elote con Mantequilla', 'Rico elote en pincho cubierto en mantequilla derretida.', 2500, 0, 13, 0, 'https://editorialtelevisa.brightspotcdn.com/dims4/default/fe4c40d/2147483647/strip/true/crop/560x560+220+0/resize/1000x1000!/quality/90/?url=https%3A%2F%2Fk2-prod-editorial-televisa.s3.us-east-1.amazonaws.com%2Fbrightspot%2Fwp-content%2Fuploads%2F2018%2F12%2Felotes-mantequilla-maple-romero.jpg'); 
+
+INSERT INTO PLATO (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
+    ('Pasta Carbonara', 'Clasica pasta italiana con cachete de cerdo y queso pecorino', 4000, 0, 8, 0, 'https://i.blogs.es/8819e1/carbonara-rec/650_1200.jpg'); 
+
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_id_plato PLATO.id_plato%TYPE;
+    v_descripcion PLATO.descripcion%TYPE;
+    v_detalle PLATO.detalle%TYPE;
+    v_precio PLATO.precio%TYPE;
+    v_existencias PLATO.existencias%TYPE;
+BEGIN
+    v_cursor := OBTENER_PLATOS_AGOTADO;
+    
+    LOOP
+        FETCH v_cursor INTO v_id_plato, v_descripcion, v_detalle, v_precio, v_existencias;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || v_id_plato || CHR(10) ||
+    'Descripcion: ' || v_descripcion || CHR(10) || 
+    'Detalle: ' || v_detalle || CHR(10) ||
+    'Precio: ' || v_precio || CHR(10) ||
+    'Existencias: ' || v_existencias || CHR(10));
+    END LOOP;
+    CLOSE v_cursor;
+END;
+
+-- 11. Funcion para mostrar los primeros x (maximo) platos en ser los más popualres
+CREATE OR REPLACE FUNCTION OBTENER_PLATOS_POPULARES (
+    maximo NUMBER
+)
+RETURN SYS_REFCURSOR
+IS
+    platos_pop SYS_REFCURSOR;
+BEGIN
+    OPEN platos_pop FOR
+    SELECT 
+        p.ID_PLATO , p.DESCRIPCION, SUM(v.CANTIDAD) AS total
+    FROM
+        PLATO p
+    JOIN
+        VENTA v ON p.ID_PLATO = v.ID_PLATO
+    GROUP BY 
+        p.ID_PLATO, p.DESCRIPCION
+    ORDER BY
+        total DESC
+    FETCH FIRST maximo ROWS ONLY;
+    
+    RETURN platos_pop;
+END;
+   
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_id_plato PLATO.id_plato%TYPE;
+    v_descripcion PLATO.descripcion%TYPE;
+    v_total NUMBER;
+BEGIN
+    v_cursor := OBTENER_PLATOS_POPULARES(5);
+    
+    LOOP
+        FETCH v_cursor INTO v_id_plato, v_descripcion, v_total;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || v_id_plato || CHR(10) ||
+    'Descripcion: ' || v_descripcion || CHR(10) || 
+    'Total Vendidos: ' || v_total || CHR(10));
+    END LOOP;
+    CLOSE v_cursor;
+END; 
+    
+SELECT OBTENER_PLATOS_POPULARES(5) FROM DUAL;
+    
+-- 12. Funcion para obtener la ultima factura registrada por x usuario
+CREATE OR REPLACE FUNCTION OBTENER_ULTIMA_FACTURA_USUARIO (
+    p_id_usuario IN NUMBER
+)
+RETURN usuarioDondePapa.FACTURA%ROWTYPE
+IS
+    v_ultima_factura usuarioDondePapa.factura%ROWTYPE;
+BEGIN
+    
+    BEGIN
+        SELECT *
+        INTO 
+            v_ultima_factura
+        FROM (
+            SELECT *
+            FROM FACTURA
+            WHERE ID_USUARIO = p_id_usuario
+            ORDER BY FECHA DESC
+        )
+        WHERE ROWNUM = 1;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL;
+    END;
+    
+    RETURN v_ultima_factura;
+END;
+    
+SELECT * FROM FACTURA;
+    
+DECLARE
+    v_factura usuarioDondePapa.FACTURA%ROWTYPE;
+    v_id_usuario NUMBER;
+BEGIN
+    v_factura := OBTENER_ULTIMA_FACTURA_USUARIO(3);
+    
+    IF v_factura.ID_FACTURA IS NOT NULL THEN
+        DBMS_OUTPUT.PUT_LINE('ID Factura: ' || v_factura.id_factura);
+        DBMS_OUTPUT.PUT_LINE('Fecha: ' || v_factura.fecha);
+        DBMS_OUTPUT.PUT_LINE('Total: ' || v_factura.total);
+        DBMS_OUTPUT.PUT_LINE('Estado: ' || v_factura.estado);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('No se encontraron facturas para el usuario.');
+    END IF;
+END;
+    
+-- 13. Funcion para obtener el rol de un usuario
+CREATE OR REPLACE FUNCTION OBTENER_ROLES_POR_USUARIO (
+    p_id_usuario IN NUMBER
+) 
+RETURN SYS_REFCURSOR
+AS
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN v_cursor FOR
+        SELECT 
+            NOMBRE AS Rol
+        FROM 
+           ROL
+        WHERE 
+            ID_USUARIO = p_id_usuario;
+            
+    RETURN v_cursor;
+END;
+    
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_rol usuarioDondePapa.ROL.nombre%TYPE;
+BEGIN
+    v_cursor := OBTENER_ROLES_POR_USUARIO(1);
+    
+    LOOP
+        FETCH v_cursor INTO v_rol;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ROL: ' || v_rol || CHR(10));
+    END LOOP;
+    
+    CLOSE v_cursor;
+END; 
+
+-- 14. Funcion para rapidamente buscar el contacto de una reserva en caso de una emergencia.
+CREATE OR REPLACE FUNCTION OBTENER_CONTACTO_RESERVACION(
+    p_id_reservacion IN NUMBER
+) 
+RETURN VARCHAR2
+IS
+    v_contacto VARCHAR2(255);
+BEGIN
+    SELECT CONTACTO
+    INTO v_contacto
+    FROM RESERVACION
+    WHERE ID_RESERVACION = p_id_reservacion;
+
+    RETURN v_contacto;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'No tenemos esa reservación registrada';
+END;
+
+SELECT OBTENER_CONTACTO_RESERVACION(41) CONTACTO FROM DUAL;
 
 
+SELECT * FROM RESERVACION;
 
+-- 15.
+CREATE OR REPLACE FUNCTION OBTENER_INFO_POR_CONTACTO (
+    p_contacto IN VARCHAR2
+)
+RETURN SYS_REFCURSOR
+AS
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN v_cursor FOR
+    SELECT 
+        NOMBRE,
+        NUMERO_DE_MESA
+    FROM 
+        RESERVACION
+    WHERE 
+        CONTACTO = p_contacto;
+    
+    RETURN v_cursor;
+END;
 
-
-
-
-
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_rol usuarioDondePapa.ROL.nombre%TYPE;
+BEGIN
+    v_cursor := OBTENER_ROLES_POR_USUARIO(1);
+    
+    LOOP
+        FETCH v_cursor INTO v_rol;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ROL: ' || v_rol || CHR(10));
+    END LOOP;
+    
+    CLOSE v_cursor;
+END;
+    
+    
+    
 
 
 
