@@ -3,6 +3,7 @@ package com.ProyectoWebRestaurante.service.impl;
 import com.ProyectoWebRestaurante.dao.PlatoDao;
 import com.ProyectoWebRestaurante.domain.Plato;
 import com.ProyectoWebRestaurante.service.PlatoService;
+import com.ProyectoWebRestaurante.repository.PlatoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class PlatoServiceImpl implements PlatoService {
 
     @Autowired
     private PlatoDao platoDao;
+    
+    @Autowired
+    private PlatoRepository platoRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -49,6 +53,7 @@ public class PlatoServiceImpl implements PlatoService {
         return platoDao.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
     }
 
+    /*
     @Override
     @Transactional(readOnly = true)
     public List<Plato> consultaJPQL(double precioInf, double precioSup) {
@@ -59,5 +64,10 @@ public class PlatoServiceImpl implements PlatoService {
     @Transactional(readOnly = true)
     public List<Plato> consultaSQL(double precioInf, double precioSup) {
         return platoDao.consultaSQL(precioInf, precioSup);
+    } */
+    
+    @Override
+    public List<Plato> OBTENER_PLATOS_X_CATEGORIA(Long idCategoria) {
+        return platoRepository.findByCategoriaIdCategoria(idCategoria);
     }
 }

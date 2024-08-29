@@ -1,7 +1,9 @@
 package com.ProyectoWebRestaurante.service;
 
 import com.ProyectoWebRestaurante.domain.Plato;
+import com.ProyectoWebRestaurante.repository.PlatoRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public interface PlatoService {
     
@@ -28,11 +30,13 @@ public interface PlatoService {
     
     public List<Plato> consultaJPA(double precioInf, double precioSup);
     
-    // Se define una consulta tipo SQL para recuperar los productos
+    /*// Se define una consulta tipo SQL para recuperar los productos
     // que se encuentran en un rango de precios ordenados por descripción ascendente
     public List<Plato> consultaJPQL(double precioInf, double precioSup);
     
     // Se define una consulta tipo SQL nativa para recuperar los productos
     // que se encuentran en un rango de precios ordenados por descripción ascendente
-    public List<Plato> consultaSQL(double precioInf, double precioSup);
+    public List<Plato> consultaSQL(double precioInf, double precioSup); */
+    
+    public List<Plato> OBTENER_PLATOS_X_CATEGORIA(Long idCategoria);
 }

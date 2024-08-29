@@ -2478,48 +2478,11 @@ CREATE OR REPLACE PACKAGE BODY PCKG_GESTION_USUARIO AS
     ) IS
     BEGIN
         DELETE FROM USUARIO
-        WHERE id_usuario = p_id_usuario;
-    END;
-
-    FUNCTION OBTENER_USUARIO (
-        p_id_usuario IN NUMBER
-    ) RETURN usuarioDondePapa.usuario%ROWTYPE IS
-        v_usuario usuarioDondePapa.usuario%ROWTYPE;
-    BEGIN
-        SELECT * INTO v_usuario
-        FROM usuarioDondePapa.usuario
-        WHERE id_usuario = p_id_usuario;
-        RETURN v_usuario;
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            RETURN NULL;
-    END;
-
-    FUNCTION ES_USUARIO_ACTIVO (
-        p_id_usuario IN NUMBER
-    ) RETURN BOOLEAN IS
-        v_activo NUMBER;
-    BEGIN
-        SELECT activo INTO v_activo
-        FROM usuarioDondePapa.usuario
-        WHERE id_usuario = p_id_usuario;
-        RETURN (v_activo = 1);
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            RETURN FALSE;
-    END;
-
-    FUNCTION OBTENER_USUARIOS_ACTIVOS RETURN SYS_REFCURSOR IS
-        v_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_cursor FOR
-        SELECT * FROM usuarioDondePapa.usuario
-        WHERE activo = 1;
-        RETURN v_cursor;
+        WHERE ID_USUARIO = p_id_usuario;
     END;
     
 END PCKG_GESTION_USUARIO;
-/
+
 
 
 

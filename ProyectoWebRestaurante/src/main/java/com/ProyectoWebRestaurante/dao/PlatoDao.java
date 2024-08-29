@@ -13,6 +13,7 @@ public interface PlatoDao
     public List<Plato> findByPrecioBetweenOrderByDescripcion(
         double precioInf, double precioSup);
     
+    /*
     //Se define una consulta tipo SQL para recuperar los productos
     //Que se encuentran en un rango de precios ordenador por descripcion acedentes 
     @Query(value="SELECT p FROM Plato p WHERE p.precio BETWEEN :precioInf and :precioSup ORDER BY p.descripcion ASC")
@@ -22,6 +23,6 @@ public interface PlatoDao
     //Que se encuentran en un rango de precios ordenador por descripcion acedentes
     @Query(nativeQuery = true,value="SELECT*"+
             " FROM Plato p WHERE p.precio BETWEEN :precioInf and :precioSup ORDER BY p.descripcion ASC")
-    public List<Plato> consultaSQL(double precioInf, double precioSup);
+    public List<Plato> consultaSQL(double precioInf, double precioSup); */
     
 }
