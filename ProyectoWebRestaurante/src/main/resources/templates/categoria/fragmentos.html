@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Categorias</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="/css/estilos.css"/>
+        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet" />
+        <script th:src="@{/js/rutinas.js}"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <!-- 1 Sección para crear el boton de agregar... llamará a una ventana modal-->
+        <section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">   
+                        <button 
+                            sec:authorize="hasRole('ADMIN')"
+                            type="button" 
+                            class="btn btn-primary btn-block" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#agregarCategoria">
+                            <i class="fas fa-plus"></i> <span th:text="Agregar">Agregar Categoria</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2 Sección principal para mostrar la informacion de la entidad Categoria -->
+
+        <section th:fragment="listadoCategorias" id="categorias">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Categorias</h4>
+                            </div>
+                            <div th:if="${categorias != null and !categorias.isEmpty()}">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Descripción</th>
+                                            <th scope="col">Disponible</th>
+                                            <th scope="col">Imagen</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="categoria : ${categorias}">
+                                            <td th:text="${categoria.idCategoria}"></td>
+                                            <td th:text="${categoria.descripcion}"></td>
+                                            <td th:text="${categoria.disponible ? 'Sí' : 'No'}"></td>
+                                            <td>
+                                                <img th:if="${categoria.rutaImagen}" th:src="@{${categoria.rutaImagen}}" alt="Imagen de la categoría" style="width: 100px; height: auto;"/>
+                                            </td>
+                                            <td>
+                                                <!-- Corregido el URL para coincidir con la sintaxis de Thymeleaf para parámetros URL -->
+                                                <a th:href="@{/categoria/eliminar/{id}(id=${categoria.idCategoria})}" class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i> Eliminar
+                                                </a>
+                                                <a th:href="@{/categoria/modificar/{id}(id=${categoria.idCategoria})}" class="btn btn-warning">
+                                                    <i class="fas fa-edit"></i> Editar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${categoria == null or categorias.isEmpty()}">
+                                <span>Lo sentimos, no hay tiempos de comida disponibles</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center bg-success text-white mb-3">
+                            <div class="card-body">
+                                <h3 >Tiempos de comida</h3>
+                                <h4 class="fs-2"><i class="fas fa-users"></i> <span th:text="${totalCategorias}">Total</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 3 agregarCategoria -->
+        <section th:fragment="agregarCategoria">
+            <div id="agregarCategoria" 
+                 class="modal fade" 
+                 tabindex="-1" 
+                 aria-labelledby="exampleModalLabel" 
+                 aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title" th:text="Agregar">Agregar Categoría</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form th:action="@{/categoria/guardar}" th:object="${categoria}"
+                              method="POST" class="was-validated" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="descripcion" th:text="Descripcion">Descripción</label>
+                                    <input type="text" class="form-control" th:field="*{descripcion}" required="true"/>
+                                    <div class="invalid-feedback" th:text="Obligatorio">Este campo es obligatorio.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="disponible" th:text="Disponible">Activo</label>
+                                    <input class="form-check-input" type="checkbox" th:field="*{disponible}" id="disponible"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="imagenFile" th:text="Imagen">Imagen</label>
+                                    <input class="form-control" type="file" id="imagenFile" name="imagenFile" onchange="readURL(this);"/>
+                                    <img id="blah" src="#" alt="Imagen seleccionada" height="200" style="display:none;"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 editarCategoria -->
+        <section th:fragment="editarCategoria">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form id="editForm" th:action="@{/categoria/guardar}" 
+                          th:object="${categoria}"
+                          method="POST" 
+                          class="was-validated"                          
+                          enctype="multipart/form-data">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 th:text="Actualizar">Actualizar Categoria</h4>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" th:field="*{idCategoria}"/>
+                                <input type="hidden" th:field="*{rutaImagen}"/>
+                                <div class="mb-3">
+                                    <label for="descripcion" th:text="Descripcion">Descripción</label>
+                                    <input type="text" class="form-control" 
+                                           th:field="*{descripcion}"
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="disponible" th:text="Disponible">Disponible</label>
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       th:field="*{disponible}"
+                                       id="disponible">
+                            </div>
+                            <div class="mb-3">
+                                <label for="imagenFile">Imagen</label>
+                                <input class="form-control" type="file" id="imagenFile" name="imagenFile" onchange="readURL(this);" />
+                                <img id="blah" th:if="${categoria.rutaImagen}" th:src="@{${categoria.rutaImagen}}" alt="Imagen de categoría" height="200" style="display:none;" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- Including the button fragment inside the form -->
+                    <div th:replace="~{:: botonesEditar}"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 botonesEditar-->
+    <section th:fragment="botonesEditar">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end py-4 mb-4 bg-light">
+            <a th:href="@{/categoria/listado}" class="btn btn-primary me-md-2">
+                <i class="fas fa-arrow-left"></i> <span th:text="Regresar">Regresar</span>
+            </a>
+            <a th:href="@{/categoria/eliminar/{id}(id=${categoria.idCategoria})}"
+               class="btn btn-danger me-md-2">
+                <i class="fas fa-trash"></i> <span th:text="Eliminar">Eliminar</span>
+            </a>
+            <button type="submit" form="editForm" class="btn btn-success">
+                <i class="fas fa-check"></i> <span th:text="Guardar">Guardar</span>
+            </button>
+        </div>
+    </section>
+
+
+
+</body>
+</html>
