@@ -1236,11 +1236,6 @@ END;
 --------------------------------------------------------
 -- CURSORES
 --------------------------------------------------------
---------------------------------------------------------
--- CURSORES
---------------------------------------------------------
-SET SERVEROUTPUT ON;
-
 
 // 1.
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
@@ -1438,11 +1433,7 @@ BEGIN
 END;
 
 BEGIN
-<<<<<<< HEAD
-    OBTENER_RESERVAS_POR_FECHA(TO_DATE('2024-08-21', 'YYYY-MM-DD')); -- CAMBIAR FECHA DEFAUL
-=======
     OBTENER_RESERVAS_POR_FECHA(TO_DATE('2024-07-1', 'YYYY-MM-DD')); -- CAMBIAR FECHA DEFAUL
->>>>>>> 3ede5298ebd24dc8d4f1b362da6f3d461dc0b697
 END;
 
 --------------------------------------------------------
@@ -1628,9 +1619,6 @@ END;
 BEGIN
     OBTENER_RESERVAS_POR_NOMBRE('Juan');
 END;
-<<<<<<< HEAD
-
-=======
 --------------------------------------------------------
 -- FUNCIONES & PAQUETES
 --------------------------------------------------------
@@ -1730,8 +1718,9 @@ END;
 
 SELECT * FROM RESERVACION;
 
-SELECT VERIFICAR_DISPONIBILIDAD_MESA(2, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
+SELECT VERIFICAR_DISPONIBILIDAD_MESA(3, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
+
 SELECT VERIFICAR_DISPONIBILIDAD_MESA(5, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
 
@@ -2166,4 +2155,46 @@ BEGIN
     END LOOP;
     CLOSE v_cursor;
 END; 
->>>>>>> 3ede5298ebd24dc8d4f1b362da6f3d461dc0b697
+
+--------------------------------------------------------
+-- PAQUETES
+--------------------------------------------------------
+SELECT * FROM CATEGORIA;
+-- 1. 
+CREATE OR REPLACE PACKAGE pckg_GESTION_CATEGORIAS AS
+
+    PROCEDURE INSERT_CATEGORIA (
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    );
+    
+    PROCEDURE UPDATE_CATEGORIA (
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    );
+    
+    PROCEDURE DELETE_CATEGORIA (
+        p_id_categoria IN NUMBER
+    );
+
+END pckg_GESTION_CATEGORIAS;
+
+CREATE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
