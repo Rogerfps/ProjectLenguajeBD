@@ -853,6 +853,11 @@ ORDER BY
 --------------------------------------------------------
 -- CURSORES
 --------------------------------------------------------
+--------------------------------------------------------
+-- CURSORES
+--------------------------------------------------------
+SET SERVEROUTPUT ON;
+
 
 // 1.
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
@@ -870,6 +875,9 @@ BEGIN
     CLOSE platos_disponibles_cur;
 END;
 
+BEGIN
+    OBTENER_PLATOS_DISPONIBLES;
+END;
 --------------------------------------------------------
 
 // 2.
@@ -890,6 +898,9 @@ BEGIN
     CLOSE facturas_cur;
 END;
 
+BEGIN
+    OBTENER_FACTURAS_POR_USUARIO(1);  -- ACA SE CAMBIA POR EL VALOR DE USER
+END;
 --------------------------------------------------------
 
 // 3.
@@ -908,6 +919,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Venta: ' || v_venta.id_venta || ', ID Factura: ' || v_venta.id_factura || ', Precio: ' || v_venta.precio || ', Cantidad: ' || v_venta.cantidad);
     END LOOP;
     CLOSE ventas_cur;
+END;
+
+BEGIN
+    OBTENER_VENTAS_POR_PLATO(2);  -- SE CAMBIA POR EL ID
 END;
 
 --------------------------------------------------------
@@ -935,6 +950,10 @@ BEGIN
     CLOSE ventas_total_cur;
 END;
 
+BEGIN
+    OBTENER_TOTAL_VENTAS_POR_USUARIO(1);  -- CAMBIAR POR USER
+END;
+
 --------------------------------------------------------
 
 // 5.
@@ -953,6 +972,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Reservacion: ' || v_reservacion.id_reservacion || ', Nombre: ' || v_reservacion.nombre || ', Hora: ' || v_reservacion.hora || ', Numero de Mesa: ' || v_reservacion.numero_de_mesa || ', Contacto: ' || v_reservacion.contacto);
     END LOOP;
     CLOSE reservaciones_cur;
+END;
+
+BEGIN
+    OBTENER_RESERVACIONES(101);  -- CAMBIAR POR ID RESERVACION
 END;
 
 --------------------------------------------------------
@@ -978,6 +1001,10 @@ BEGIN
     CLOSE clientes_cursor;
 END;
 
+BEGIN
+    OBTENER_CLIENTES_POR_ESTADO(1);  -- CAMBIAR POR EL ESTADO
+END;
+
 --------------------------------------------------------
 
 // 7.
@@ -1000,6 +1027,11 @@ BEGIN
     END LOOP;
     CLOSE productos_cursor;
 END;
+
+BEGIN
+    OBTENER_PRODUCTOS_POR_CATEGORIA(2);  -- CAMBIAR ID POR CATEGORIA
+END;
+
 --------------------------------------------------------
 // 8.
 CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_FECHA (
@@ -1020,6 +1052,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Reserva: ' || reserva_record.ID_RESERVACION || ', Nombre: ' || reserva_record.NOMBRE || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA);
     END LOOP;
     CLOSE reservas_cursor;
+END;
+
+BEGIN
+    OBTENER_RESERVAS_POR_FECHA(TO_DATE('2024-08-21', 'YYYY-MM-DD')); -- CAMBIAR FECHA DEFAUL
 END;
 
 --------------------------------------------------------
@@ -1049,6 +1085,10 @@ BEGIN
     CLOSE ventas_cursor;
 END;
 
+BEGIN
+    OBTENER_VENTAS_POR_FECHA(TO_DATE('2024-08-21', 'YYYY-MM-DD'));-- CAMBIAR FECHA
+END;
+
 --------------------------------------------------------
 // 10.
 CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_ESTADO (
@@ -1069,6 +1109,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Factura: ' || factura_record.ID_FACTURA || ', Fecha: ' || factura_record.FECHA || ', Total: ' || factura_record.TOTAL);
     END LOOP;
     CLOSE facturas_cursor;
+END;
+
+BEGIN
+    OBTENER_FACTURAS_POR_ESTADO(1);  -- CAMBIAR ID POR ESTADO
 END;
 
 --------------------------------------------------------
@@ -1093,6 +1137,10 @@ BEGIN
     CLOSE transacciones_cursor;
 END;
 
+BEGIN
+    OBTENER_TRANSACCIONES_POR_TIPO('Pago');  -- CAMBIAR POR EL TIPO DE TRANSACCIONS
+END;
+
 --------------------------------------------------------
 // 12.
 CREATE OR REPLACE PROCEDURE OBTENER_USUARIOS_ACTIVOS
@@ -1113,6 +1161,10 @@ BEGIN
     CLOSE usuarios_cursor;
 END;
 
+BEGIN
+    OBTENER_USUARIOS_ACTIVOS;
+END;
+
 --------------------------------------------------------
 // 13.
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES
@@ -1131,6 +1183,10 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('ID Plato: ' || plato_record.ID_PLATO || ', Descripción: ' || plato_record.DESCRIPCION || ', Precio: ' || plato_record.PRECIO || ', Existencias: ' || plato_record.EXISTENCIAS);
     END LOOP;
     CLOSE platos_cursor;
+END;
+
+BEGIN
+    OBTENER_PLATOS_DISPONIBLES;
 END;
 
 --------------------------------------------------------
@@ -1155,6 +1211,10 @@ BEGIN
     CLOSE facturas_cursor;
 END;
 
+BEGIN
+    OBTENER_FACTURAS_POR_USUARIO(:id_usuario);
+END;
+
 --------------------------------------------------------
 // 15.
 CREATE OR REPLACE PROCEDURE OBTENER_RESERVAS_POR_NOMBRE (
@@ -1176,3 +1236,9 @@ BEGIN
     END LOOP;
     CLOSE reservas_cursor;
 END;
+
+
+BEGIN
+    OBTENER_RESERVAS_POR_NOMBRE('Juan');
+END;
+
