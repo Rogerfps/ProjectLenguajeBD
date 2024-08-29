@@ -1620,7 +1620,7 @@ BEGIN
     OBTENER_RESERVAS_POR_NOMBRE('Juan');
 END;
 --------------------------------------------------------
--- FUNCIONES
+-- FUNCIONES & PAQUETES
 --------------------------------------------------------
 
 -- 1. Obtener platos por categoría especificada.
@@ -1661,6 +1661,9 @@ END;
 
 SELECT * FROM PLATO;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 2. Obtener el total de un producto, el total con descuento aplicado, y el monto reducido con el descuento.
 CREATE OR REPLACE FUNCTION CALCULAR_DESCUENTO_PLATO (
     p_id_plato IN NUMBER,
@@ -1685,6 +1688,9 @@ SELECT p.id_plato "ID", p.precio "Precio Original",
     (p.precio - CALCULAR_DESCUENTO_PLATO(p.id_plato, 10)) "Descuento"
 FROM PLATO p
 WHERE p.id_plato = 45;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -- 3. Función para verificar si una mesa está apartada o reservada, esto 
 -- introduciendo el número de la mesa y la fecha del día de la reserva.
@@ -1717,6 +1723,9 @@ FROM DUAL;
 SELECT VERIFICAR_DISPONIBILIDAD_MESA(5, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 4. Función para encontrar el correo afiliado a un usuario específico por medio de su ID.
 CREATE OR REPLACE FUNCTION OBTENER_CORREO_USUARIO (
     p_id_usuario IN NUMBER
@@ -1740,6 +1749,9 @@ SELECT username, correo FROM USUARIO;
 
 SELECT OBTENER_CORREO_USUARIO(2) Correo FROM DUAL;
 SELECT OBTENER_CORREO_USUARIO(7) Correo FROM DUAL;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -- 5. Función para obtener el nombre de un plato dependiendo del ID insertado
 CREATE OR REPLACE FUNCTION OBTENER_PLATO_X_ID (
@@ -1766,6 +1778,9 @@ SELECT id_plato, descripcion FROM PLATO;
 SELECT OBTENER_PLATO_X_ID(42) Plato FROM DUAL;
 SELECT OBTENER_PLATO_X_ID(85) Plato FROM DUAL;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 6. Funcion para mostrar el precio total de una factura con el IVA aplicado.
 CREATE OR REPLACE FUNCTION CALCULAR_IVA_FACTURA (
     p_id_factura IN NUMBER
@@ -1787,6 +1802,9 @@ END;
 SELECT f.total TOTAL, CALCULAR_IVA_FACTURA(3) TOTAL_IVA, '13%' AS IVA
 FROM FACTURA f
 WHERE f.id_factura = 3;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -- 7. Función que muestra por medio de DBMS.OUTPUT, una lista de las transacciones
 -- realizadas por un usuario.
@@ -1847,6 +1865,9 @@ BEGIN
     CLOSE v_cursor;
 END;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 8. Funcion que calcula el total de ingresos generados por un producto almacenado en VENTAs
 CREATE OR REPLACE FUNCTION CALCULAR_VENTAS_X_PLATO (
     p_id_plato NUMBER
@@ -1865,6 +1886,9 @@ END;
 
 SELECT CALCULAR_VENTAS_X_PLATO(10) "TOTAL VENTAS" FROM DUAL;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 9. Funcionar para calcular el preico promedio de los platos, aunque aparente
 -- innecesario, esto puede ser de ayuda cuando se requiera hacer un análisis 
 -- después de la modificación de precios en productos, ingreso/departura de otros, etc.
@@ -1882,6 +1906,9 @@ BEGIN
 END;
 
 SELECT CALCULAR_AVG_PRECIO_PLATOS PROMEDIO FROM DUAL;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -- 10. Funcion que imprime por medio de un DMBS.OUTPUT, los platos agotados.
 CREATE OR REPLACE FUNCTION OBTENER_PLATOS_AGOTADO
@@ -1927,6 +1954,9 @@ BEGIN
     CLOSE v_cursor;
 END;
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 11. Funcion para mostrar los primeros x (maximo) platos en ser los más popualres
 CREATE OR REPLACE FUNCTION OBTENER_PLATOS_POPULARES (
     maximo NUMBER
@@ -1970,6 +2000,9 @@ BEGIN
 END; 
     
 SELECT OBTENER_PLATOS_POPULARES(5) FROM DUAL;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
     
 -- 12. Funcion para obtener la ultima factura registrada por x usuario
 CREATE OR REPLACE FUNCTION OBTENER_ULTIMA_FACTURA_USUARIO (
@@ -2016,6 +2049,9 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('No se encontraron facturas para el usuario.');
     END IF;
 END;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
     
 -- 13. Funcion para obtener el rol de un usuario
 CREATE OR REPLACE FUNCTION OBTENER_ROLES_POR_USUARIO (
@@ -2051,6 +2087,9 @@ BEGIN
     CLOSE v_cursor;
 END; 
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 -- 14. Funcion para rapidamente buscar el contacto de una reserva en caso de una emergencia.
 CREATE OR REPLACE FUNCTION OBTENER_CONTACTO_RESERVACION(
     p_id_reservacion IN NUMBER
@@ -2075,7 +2114,12 @@ SELECT OBTENER_CONTACTO_RESERVACION(41) CONTACTO FROM DUAL;
 
 SELECT * FROM RESERVACION;
 
--- 15.
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-- 15. Esta función va de la mano con la anterior, ya que una vez obtenido el
+-- numero de telefono, se puede buscar el nombre y numero de mesa del usuario
+-- que reservó en caso de emergencia.
 CREATE OR REPLACE FUNCTION OBTENER_INFO_POR_CONTACTO (
     p_contacto IN VARCHAR2
 )
@@ -2097,23 +2141,16 @@ END;
 
 DECLARE
     v_cursor SYS_REFCURSOR;
-    v_rol usuarioDondePapa.ROL.nombre%TYPE;
+    v_nombre RESERVACION.nombre%TYPE;
+    v_numero_mesa RESERVACION.numero_de_mesa%TYPE;
 BEGIN
-    v_cursor := OBTENER_ROLES_POR_USUARIO(1);
+    v_cursor := OBTENER_INFO_POR_CONTACTO('555-1234');
     
     LOOP
-        FETCH v_cursor INTO v_rol;
+        FETCH v_cursor INTO v_nombre, v_numero_mesa;
         EXIT WHEN v_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ROL: ' || v_rol || CHR(10));
+        DBMS_OUTPUT.PUT_LINE('A nombre de: ' || v_nombre || CHR(10) ||
+    'Numero de Mesa: ' || v_numero_mesa || CHR(10));
     END LOOP;
-    
     CLOSE v_cursor;
-END;
-    
-    
-    
-
-
-
-
-
+END; 
