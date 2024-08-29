@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---PROYECTO 2- LENGUAJES DE BASES DE DATOS - JUAN PABLO VINDAS SUAREZ, SEBASTIAN SEGURA SAENZ, ROGER FERNANDO PEREIRA SANCHES, MATIAS VARGAS UMA�A
+--PROYECTO 2- LENGUAJES DE BASES DE DATOS - JUAN PABLO VINDAS SUAREZ, SEBASTIAN SEGURA SAENZ, ROGER FERNANDO PEREIRA SANCHES, MATIAS VARGAS UMAï¿½A
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------
@@ -125,7 +125,7 @@ ADD CONSTRAINT fk_transacciones_usuario FOREIGN KEY (id_usuario) REFERENCES usua
 -- INSERTS
 --------------------------------------------------------
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
-    ('S�ndwiches', 1, 'https://i.blogs.es/1cbc97/collage_sanwich/1366_2000.jpg');
+    ('Sï¿½ndwiches', 1, 'https://i.blogs.es/1cbc97/collage_sanwich/1366_2000.jpg');
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
     ('Sopas', 1, 'https://i.blogs.es/4f9a7f/collage-seis-fotos-portada-dap/650_1200.jpg');
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
@@ -161,66 +161,66 @@ INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VA
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
     ('Bocas clasicas', 1, 'https://enbocacr.com/wp-content/uploads/2023/06/platos-enboca-2023-1.jpg');
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
-    ('Bebidas Donde Pap�', 1, 'https://aprende.com/wp-content/uploads/2022/10/bebidas-naturales.jpg');
+    ('Bebidas Donde Papï¿½', 1, 'https://aprende.com/wp-content/uploads/2022/10/bebidas-naturales.jpg');
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
     ('Licores', 1, 'https://thefoodtech.com/wp-content/uploads/2020/05/productos-diaego.jpg');
 INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen) VALUES 
     ('Postres', 1, 'https://i.blogs.es/1c733d/postres/1366_2000.jpg');
 
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Ensalada C�sar', 'Con quesito parmesano y cuadritos de pan tostado con nuestro pollo grill.', 4500, 10, 1, 1, 'https://www.gourmet.cl/wp-content/uploads/2016/09/Ensalada_C%C3%A9sar-web-553x458.jpg');
+    ('Ensalada Cï¿½sar', 'Con quesito parmesano y cuadritos de pan tostado con nuestro pollo grill.', 4500, 10, 1, 1, 'https://www.gourmet.cl/wp-content/uploads/2016/09/Ensalada_C%C3%A9sar-web-553x458.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Ensalada Caprese', 'Ensalada italiana de san pelegrino resaltada por rodajas de tomate y el sabor de la albahaca fresca.', 4500, 10, 1, 1, 'https://i.blogs.es/5ca73e/ensalada-caprese-rehacer-pakus-dap/1366_2000.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Ensalada Pescado', 'Ensalada con cuadritos de pan tostado con nuestro empanizado, al ajillo o grill', 4500, 10, 1, 1, 'https://www.recetasnestle.com.do/sites/default/files/srh_recipes/47b45c7192d1d88acff53e7064202d4f.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('S�ndwich de Pollo', 'Con pan ciabatta, nuestro s�ndwich de pollo, lechuga, tomate y deliciosas salsa cl�sicas', 3700, 10, 2, 1, 'https://images.aws.nestle.recipes/original/0dcdbe631b092077fd7e411236c4b06d_sandwich_de_pollo_a_las_finas_hierbas_-_mx_ponte_bien.jpg');
+    ('Sï¿½ndwich de Pollo', 'Con pan ciabatta, nuestro sï¿½ndwich de pollo, lechuga, tomate y deliciosas salsa clï¿½sicas', 3700, 10, 2, 1, 'https://images.aws.nestle.recipes/original/0dcdbe631b092077fd7e411236c4b06d_sandwich_de_pollo_a_las_finas_hierbas_-_mx_ponte_bien.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('S�ndwich de Jam�n y Queso', 'Deliciosa crepa de pollo en su salsa blanca', 3200, 10, 2, 1, 'https://www.comedera.com/wp-content/uploads/2021/03/sandwich-de-jamon-y-queso.jpg');
+    ('Sï¿½ndwich de Jamï¿½n y Queso', 'Deliciosa crepa de pollo en su salsa blanca', 3200, 10, 2, 1, 'https://www.comedera.com/wp-content/uploads/2021/03/sandwich-de-jamon-y-queso.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('S�ndwich de Carne', 'Con pan ciabatta, nuestro s�ndwich de jam�n y queso, lechuga, tomate y deliciosas salsa cl�sicas.', 4000, 10, 2, 1, 'https://www.gourmet.cl/wp-content/uploads/2016/05/Sandwich-de-Carne-Mechada-con-cebolla-caramelizada-y-tomates-asados.jpg');
+    ('Sï¿½ndwich de Carne', 'Con pan ciabatta, nuestro sï¿½ndwich de jamï¿½n y queso, lechuga, tomate y deliciosas salsa clï¿½sicas.', 4000, 10, 2, 1, 'https://www.gourmet.cl/wp-content/uploads/2016/05/Sandwich-de-Carne-Mechada-con-cebolla-caramelizada-y-tomates-asados.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Sopa Azteca', 'La sopa de tomate por excelencia tra�da directo de M�xico por pap�.', 4000, 10, 3, 1, 'https://cdn0.recetasgratis.net/es/posts/6/0/5/sopa_azteca_35506_600_square.jpg');
+    ('Sopa Azteca', 'La sopa de tomate por excelencia traï¿½da directo de Mï¿½xico por papï¿½.', 4000, 10, 3, 1, 'https://cdn0.recetasgratis.net/es/posts/6/0/5/sopa_azteca_35506_600_square.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Sopa de Mariscos', 'Compuesta por mariscos frescos, y el toque esencial de pap�.', 4500, 10, 3, 1, 'https://www.comedera.com/wp-content/uploads/2018/03/sopa-de-marisco.jpg');
+    ('Sopa de Mariscos', 'Compuesta por mariscos frescos, y el toque esencial de papï¿½.', 4500, 10, 3, 1, 'https://www.comedera.com/wp-content/uploads/2018/03/sopa-de-marisco.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Sopa de Pollo', 'Para sacarnos de cualquier apuro, la sopa curativa cl�sica.', 3300, 10, 3, 1, 'https://especiasmontero.com/wp-content/uploads/2018/02/CaldoDePollo-1.jpg');
+    ('Sopa de Pollo', 'Para sacarnos de cualquier apuro, la sopa curativa clï¿½sica.', 3300, 10, 3, 1, 'https://especiasmontero.com/wp-content/uploads/2018/02/CaldoDePollo-1.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Sopa de Rabo', 'Sacando lo mejor de los ingredientes traemos la sopa preferida de pap�.', 4000, 10, 3, 1, 'https://rumbameats.com/wp-content/uploads/2019/07/Hervido-de-_rabo-by-enrilemoine-7.jpg');
+    ('Sopa de Rabo', 'Sacando lo mejor de los ingredientes traemos la sopa preferida de papï¿½.', 4000, 10, 3, 1, 'https://rumbameats.com/wp-content/uploads/2019/07/Hervido-de-_rabo-by-enrilemoine-7.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Sopa de Mondongo', 'Sopa tradicional de la tierra costarricense para un antojo de anta�o.', 3500, 10, 3, 1, 'https://recetasdemicolombia.com/wp-content/uploads/2020/08/mondongo-500x375.jpg');
+    ('Sopa de Mondongo', 'Sopa tradicional de la tierra costarricense para un antojo de antaï¿½o.', 3500, 10, 3, 1, 'https://recetasdemicolombia.com/wp-content/uploads/2020/08/mondongo-500x375.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Wrap de Pollo y Bacon', 'Wrap relleno de pollo empanizado, delicioso tocino y nuestra salsa mayonesa chipotle.', 3500, 10, 4, 1, 'https://i.pinimg.com/736x/72/86/1b/72861baeaccca244bf2fee091a7dc675.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Wrap corvina', 'Wrap con pescado empanizado y nuestra cl�sica salsa t�rtara.', 3500, 10, 4, 1, 'https://i.pinimg.com/736x/f5/f7/9a/f5f79aa520c59e342d7c08a8fe3e9174.jpg');
+    ('Wrap corvina', 'Wrap con pescado empanizado y nuestra clï¿½sica salsa tï¿½rtara.', 3500, 10, 4, 1, 'https://i.pinimg.com/736x/f5/f7/9a/f5f79aa520c59e342d7c08a8fe3e9174.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Quesadillia Cr�pe', 'Deliciosa crepa de pollo en su sala blanca.', 3500, 10, 5, 1, 'https://thasneen.com/cooking/wp-content/uploads/2017/06/Indian-style-Quesadilla.jpg');
+    ('Quesadillia Crï¿½pe', 'Deliciosa crepa de pollo en su sala blanca.', 3500, 10, 5, 1, 'https://thasneen.com/cooking/wp-content/uploads/2017/06/Indian-style-Quesadilla.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Quesadillias de Pollo o Carne ', 'Con dos quesos, mozzarella y cheddar, disfr�talas como quieras!', 3700, 10, 5, 1, 'https://i.ytimg.com/vi/7J5JqSOP-1s/maxresdefault.jpg');
+    ('Quesadillias de Pollo o Carne ', 'Con dos quesos, mozzarella y cheddar, disfrï¿½talas como quieras!', 3700, 10, 5, 1, 'https://i.ytimg.com/vi/7J5JqSOP-1s/maxresdefault.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Quesadillias mixtas ', 'Mezcla de los dos mundos, pollo y carne en uno solo.', 4000, 10, 5, 1, 'https://assets.unileversolutions.com/recipes-v2/231998.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Casados', 'Cl�sico plato que todos los ticos reconocemos, salvador de tandas, escoge entre mechada, pescado, pollo, chuleta o bistec.', 3500, 10, 6, 1, 'https://upload.wikimedia.org/wikipedia/commons/0/08/Casado_costarricense.png');
+    ('Casados', 'Clï¿½sico plato que todos los ticos reconocemos, salvador de tandas, escoge entre mechada, pescado, pollo, chuleta o bistec.', 3500, 10, 6, 1, 'https://upload.wikimedia.org/wikipedia/commons/0/08/Casado_costarricense.png');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Chifrijo', 'Para los amantes de la combinaci�n del chicharr�n, frijoles y arroz, servido con el cl�sico oro verde y tortillitas para que amarre.', 3500, 10, 6, 1, 'https://okdiario.com/img/2020/05/07/receta-de-costa-rica_-chifrijo-1.jpg');
+    ('Chifrijo', 'Para los amantes de la combinaciï¿½n del chicharrï¿½n, frijoles y arroz, servido con el clï¿½sico oro verde y tortillitas para que amarre.', 3500, 10, 6, 1, 'https://okdiario.com/img/2020/05/07/receta-de-costa-rica_-chifrijo-1.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Chicharrones', 'El sabor de Puriscal hasta tu mesa, servido con yuca frita y ensalada a lo tico.', 3800, 10, 6, 1, 'https://www.cocinatis.com/archivos/202308/ctis1012-receta-chicharrones-de-cerdo-andaluces-1280x720x80xX.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Lengua en Salsa', 'Atr�vete a probar nuestra suave lengua en salsa de tomate, calla hasta los m�s boc�nes con su sabor.', 4800, 10, 6, 1, 'https://www.recetascostarica.com/base/stock/Recipe/272-image/272-image_web.jpg');
+    ('Lengua en Salsa', 'Atrï¿½vete a probar nuestra suave lengua en salsa de tomate, calla hasta los mï¿½s bocï¿½nes con su sabor.', 4800, 10, 6, 1, 'https://www.recetascostarica.com/base/stock/Recipe/272-image/272-image_web.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Patitas de Cerdo', 'Patitas de cerdo con frijolitos blancos, plato lleno de puro sabor donde mi tata.', 4000, 10, 6, 1, 'https://www.nutricienta.com/imagenes/alimentos/alimento-nutricienta-manitas-de-cerdo.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Patacones', 'Perfecto para quitarse esas ganas de comer a lo tico, nuestros patacones vienen con carne mechada, frijoles molidos y pico de gallo.', 3700, 10, 6, 1, 'https://www.semana.com/resizer/D-Lcez1Rj4bSIUHKyMk9rwDRIMY=/1280x720/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/CUVSFJ3V5ZEWVLBJ76BASDV2PY.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Rice and Beans', 'Lim�n presente en el men� de pap�, pollo en salsa caribe�a con ensalada y maduros con el inigualable rice and beans.', 4500, 10, 6, 1, 'https://www.allrecipes.com/thmb/YywjEMDfUzEtxUR_8i_B_4dd-7o=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/211325-b6b1befbb1644f9b93e66eee74dbe07f.jpg');
+    ('Rice and Beans', 'Limï¿½n presente en el menï¿½ de papï¿½, pollo en salsa caribeï¿½a con ensalada y maduros con el inigualable rice and beans.', 4500, 10, 6, 1, 'https://www.allrecipes.com/thmb/YywjEMDfUzEtxUR_8i_B_4dd-7o=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/211325-b6b1befbb1644f9b93e66eee74dbe07f.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Chilli Relleno', 'Relleno de carne molida, un excelente plato para el buen tico.', 4200, 10, 6, 1, 'https://www.jennieo.com/wp-content/uploads/2019/11/image-recipe_turkey-and-spinach-chile-relleno-with-fresh-tomato-sauce.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Arroz con Carne', 'Arroz directo de la casa compuesto por una combinaci�n perfecta de arroz y carne.', 4000, 10, 7, 1, 'https://recetacubana.com/wp-content/uploads/2019/12/receta-Arroz-con-Carne-de-Cerdo.jpg');
+    ('Arroz con Carne', 'Arroz directo de la casa compuesto por una combinaciï¿½n perfecta de arroz y carne.', 4000, 10, 7, 1, 'https://recetacubana.com/wp-content/uploads/2019/12/receta-Arroz-con-Carne-de-Cerdo.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Arroz con Pollo', 'Arroz con el pollo desmechado cl�sico, haciendo de este un plato t�pico delicioso.', 3700, 10, 7, 1, 'https://img.bekiacocina.com/cocina/0000/179-h.jpg');
+    ('Arroz con Pollo', 'Arroz con el pollo desmechado clï¿½sico, haciendo de este un plato tï¿½pico delicioso.', 3700, 10, 7, 1, 'https://img.bekiacocina.com/cocina/0000/179-h.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Arroz con Marinera', 'Elaborado con los mariscos m�s frescos seleccionados por pap�.', 4500, 10, 7, 1, 'https://www.elespectador.com/resizer/iSDLgK_Xt86uhsXCmvAN_Jp0Elk=/1200x675/filters:quality(60):format(jpeg)/cloudfront-us-east-1.images.arcpublishing.com/elespectador/QT2HQD77JJGDTIYXU4COEHGIRE.jpg');
+    ('Arroz con Marinera', 'Elaborado con los mariscos mï¿½s frescos seleccionados por papï¿½.', 4500, 10, 7, 1, 'https://www.elespectador.com/resizer/iSDLgK_Xt86uhsXCmvAN_Jp0Elk=/1200x675/filters:quality(60):format(jpeg)/cloudfront-us-east-1.images.arcpublishing.com/elespectador/QT2HQD77JJGDTIYXU4COEHGIRE.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Arroz con Camarones', 'Arroz con camarones de alta calidad para saciar los paladares hambrientos.', 4500, 10, 7, 1, 'https://www.recetasnestle.com.ec/sites/default/files/srh_recipes/b5761ed0a862a8c3ae9980304cd22ded.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
@@ -230,69 +230,69 @@ INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, i
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Marinera', 'Salsa de tomate o salsa blanca con mariscos o solo camarones.', 4500, 10, 9, 1, 'https://newmansown.com/wp-content/uploads/2022/03/shrimp-marinara-with-pasta.png');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Alfredo', 'Pasta con jam�n y hongos en salsa blanca.', 4000, 10, 9, 1, 'https://images.aws.nestle.recipes/resized/cc72869fabfc2bdfa036fd1fe0e2bad8_creamy_alfredo_pasta_long_left_1080_850.jpg');
+    ('Alfredo', 'Pasta con jamï¿½n y hongos en salsa blanca.', 4000, 10, 9, 1, 'https://images.aws.nestle.recipes/resized/cc72869fabfc2bdfa036fd1fe0e2bad8_creamy_alfredo_pasta_long_left_1080_850.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Filet de Corvina', 'Filet de corvina al grill, al ajillo o empanizado.', 4800, 10, 8, 1, 'https://pronacatqma.com/images/com_yoorecipe/banner_superior/8264_1.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Corvina Entera', 'Nuestra especial corvina entera sin espinas lista para ti.', 6700, 10, 8, 1, 'https://canalcocina.es/medias/images/1101_CocContigo_CorvinaHorno.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Pargo Entero', 'Pargo entero fresco para los que quieran recordar los d�as de playa.', 5800, 10, 8, 1, 'https://d1uz88p17r663j.cloudfront.net/original/cd153cfbb9d153b1786c7d45adac52b2_Pargo-rojo-al-sarten.png');
+    ('Pargo Entero', 'Pargo entero fresco para los que quieran recordar los dï¿½as de playa.', 5800, 10, 8, 1, 'https://d1uz88p17r663j.cloudfront.net/original/cd153cfbb9d153b1786c7d45adac52b2_Pargo-rojo-al-sarten.png');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Corvina Entera a la Caribe�a', 'Nuestra especial corvina entera acompa�ada de salsa caribe�a y camarones.', 8700, 10, 8, 1, 'https://media-cdn.tripadvisor.com/media/photo-s/18/2f/ec/5f/corvina-entera-frita.jpg');
+    ('Corvina Entera a la Caribeï¿½a', 'Nuestra especial corvina entera acompaï¿½ada de salsa caribeï¿½a y camarones.', 8700, 10, 8, 1, 'https://media-cdn.tripadvisor.com/media/photo-s/18/2f/ec/5f/corvina-entera-frita.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Camarones', 'Jugosos camarones empanizados o al ajillo para los fan�ticos del mar.', 4700, 10, 8, 1, 'https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/WFY4CMXRGZD3TA2FXSRPU7UDOA.jpg');
+    ('Camarones', 'Jugosos camarones empanizados o al ajillo para los fanï¿½ticos del mar.', 4700, 10, 8, 1, 'https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/WFY4CMXRGZD3TA2FXSRPU7UDOA.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Mariscada', 'Mix de mariscos frescos cocinados al ajillo creando un platillo colorido.', 4500, 10, 8, 1, 'https://imag.bonviveur.com/mariscada-gallega.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Mejillones', 'Mejillones noruegos al ajillo seleccionados por pap�.', 4800, 10, 8, 1, 'https://coyomar.es/wp-content/uploads/2022/06/Como-cocer-mejillones-1024x768.jpg');
+    ('Mejillones', 'Mejillones noruegos al ajillo seleccionados por papï¿½.', 4800, 10, 8, 1, 'https://coyomar.es/wp-content/uploads/2022/06/Como-cocer-mejillones-1024x768.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Pollo al Grill', 'Nuestro especial pollo, tratado por la mano de nuestros chefs, a la parrilla.', 4000, 10, 10, 1, 'https://storage.googleapis.com/fitia-api-bucket/media/images/recipe_images/1006680.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Pollo a la Jalape�a', 'Pollo parrillero con ganas de m�s fuego, ba�ado en nuestra salsa especial de jalape�os.', 4500, 10, 10, 1, 'https://i.ytimg.com/vi/ChLkloORDfU/maxresdefault.jpg');
+    ('Pollo a la Jalapeï¿½a', 'Pollo parrillero con ganas de mï¿½s fuego, baï¿½ado en nuestra salsa especial de jalapeï¿½os.', 4500, 10, 10, 1, 'https://i.ytimg.com/vi/ChLkloORDfU/maxresdefault.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Pollo Cordon Bleu', 'Nuestro pollo en un platillo fabuloso, cordon bleu ba�ado en salsa blanca.', 4000, 10, 10, 1, 'https://i.ytimg.com/vi/i2fwv6beoT8/maxresdefault.jpg');
+    ('Pollo Cordon Bleu', 'Nuestro pollo en un platillo fabuloso, cordon bleu baï¿½ado en salsa blanca.', 4000, 10, 10, 1, 'https://i.ytimg.com/vi/i2fwv6beoT8/maxresdefault.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Hamburguesa Donde Pap�', 'Exquisita hamburguesa de pap�, pulled pork BBQ, pepinillos, bacon, aros de cebolla.', 4800, 10, 11, 1, 'https://delination.com/wp-content/uploads/2022/11/Hamburguesa-casera-de-res-con-papas-850x550.jpeg');
+    ('Hamburguesa Donde Papï¿½', 'Exquisita hamburguesa de papï¿½, pulled pork BBQ, pepinillos, bacon, aros de cebolla.', 4800, 10, 11, 1, 'https://delination.com/wp-content/uploads/2022/11/Hamburguesa-casera-de-res-con-papas-850x550.jpeg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Hamburguesa de Pollo', 'Una de las mejores hamburguesas para los fans del pollo a la parrilla.', 4500, 10, 11, 1, 'https://www.comedera.com/wp-content/uploads/2023/07/Hamburguesa-de-pollo-picante.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Hamburguesa con Queso', 'Hamburguesa con queso de pap�, para saborear a gusto.', 3500, 10, 11, 1, 'https://pronacatqma.com/images/com_yoorecipe/banner_superior/18096_1.jpg');
+    ('Hamburguesa con Queso', 'Hamburguesa con queso de papï¿½, para saborear a gusto.', 3500, 10, 11, 1, 'https://pronacatqma.com/images/com_yoorecipe/banner_superior/18096_1.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Hamburguesa de Pescado', 'Hamburguesa de pescado con salsa t�rtara, lechuga y queso amarillo, solo... donde pap�.', 4200, 10, 11, 1, 'https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2020/03/recetas-con-filete-de-pescado-fa%25CC%2581ciles-hamburguesa.jpg');
+    ('Hamburguesa de Pescado', 'Hamburguesa de pescado con salsa tï¿½rtara, lechuga y queso amarillo, solo... donde papï¿½.', 4200, 10, 11, 1, 'https://editorialtelevisa.brightspotcdn.com/wp-content/uploads/2020/03/recetas-con-filete-de-pescado-fa%25CC%2581ciles-hamburguesa.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Costillas', 'Costilla de cerdo cocinada especialmente 3 horas por nuestros chefs.', 4800, 10, 14, 1, 'https://t1.uc.ltmcdn.com/es/posts/3/9/5/como_hacer_costillas_bbq_en_sarten_50593_orig.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Churrasco ', 'Este delicioso corte proviene de la falda de la res, cortado transversalmente, tratado por pap�.', 5800, 10, 12, 1, 'https://cdn0.recetasgratis.net/es/posts/2/3/1/churrasco_a_lo_pobre_77132_orig.jpg');
+    ('Churrasco ', 'Este delicioso corte proviene de la falda de la res, cortado transversalmente, tratado por papï¿½.', 5800, 10, 12, 1, 'https://cdn0.recetasgratis.net/es/posts/2/3/1/churrasco_a_lo_pobre_77132_orig.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Churrasco a la Jalape�a ', 'Churrasco en nuestra salsa especial a la jalape�a para darle su perfecto toque picante.', 6500, 10, 12, 1, 'https://media-cdn.tripadvisor.com/media/photo-m/1280/29/75/59/9e/churrasco-tipico.jpg');
+    ('Churrasco a la Jalapeï¿½a ', 'Churrasco en nuestra salsa especial a la jalapeï¿½a para darle su perfecto toque picante.', 6500, 10, 12, 1, 'https://media-cdn.tripadvisor.com/media/photo-m/1280/29/75/59/9e/churrasco-tipico.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Lomito ', 'Destacado por su suavidad natural, este corte de caracter�sticas jugosas puede saciar a cualquiera.', 6200, 10, 12, 1, 'https://www.clarin.com/2021/07/26/u-aUfp64d_1200x0__1.jpg');
+    ('Lomito ', 'Destacado por su suavidad natural, este corte de caracterï¿½sticas jugosas puede saciar a cualquiera.', 6200, 10, 12, 1, 'https://www.clarin.com/2021/07/26/u-aUfp64d_1200x0__1.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Lomito a la jalape�a', 'Para aquellos que quieran probar la parrilla de pap�, el suave lomito en combinaci�n con nuestro toque a la jalape�a.', 6800, 10, 12, 1, 'https://media-cdn.tripadvisor.com/media/photo-s/11/0c/bc/c4/puntas-de-lomito-a-la.jpg');
+    ('Lomito a la jalapeï¿½a', 'Para aquellos que quieran probar la parrilla de papï¿½, el suave lomito en combinaciï¿½n con nuestro toque a la jalapeï¿½a.', 6800, 10, 12, 1, 'https://media-cdn.tripadvisor.com/media/photo-s/11/0c/bc/c4/puntas-de-lomito-a-la.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Pur�', 'Suave y cremoso pur� de papas, hecho con papas seleccionadas y un toque de mantequilla, ideal para complementar cualquier plato principal. Servido caliente', 1000, 10, 13, 1, 'https://images.aws.nestle.recipes/original/892d65cba81876ed7c340ae9ce7663d3_DCS_MARZO_INSTAGRAM-04.jpg');
+    ('Purï¿½', 'Suave y cremoso purï¿½ de papas, hecho con papas seleccionadas y un toque de mantequilla, ideal para complementar cualquier plato principal. Servido caliente', 1000, 10, 13, 1, 'https://images.aws.nestle.recipes/original/892d65cba81876ed7c340ae9ce7663d3_DCS_MARZO_INSTAGRAM-04.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Vegetales', 'Mix de vegetales de temporada, cocidos al vapor para preservar su frescura y sabor natural. Una opci�n saludable y colorida.', 1000, 10, 13, 1, 'https://cdn.aarp.net/content/aarpe/es/home/salud/vida-saludable/info-2023/comer-vegetales-verduras-crudos-o-cocidos/_jcr_content/root/container_main/container_body_main/container_body1/container_body_cf/container_image/articlecontentfragment/cfimage.coreimg.50.932.jpeg/content/dam/aarp/health/healthy-living/2023/07/1140-colorfulrawveggies-esp.jpg');
+    ('Vegetales', 'Mix de vegetales de temporada, cocidos al vapor para preservar su frescura y sabor natural. Una opciï¿½n saludable y colorida.', 1000, 10, 13, 1, 'https://cdn.aarp.net/content/aarpe/es/home/salud/vida-saludable/info-2023/comer-vegetales-verduras-crudos-o-cocidos/_jcr_content/root/container_main/container_body_main/container_body1/container_body_cf/container_image/articlecontentfragment/cfimage.coreimg.50.932.jpeg/content/dam/aarp/health/healthy-living/2023/07/1140-colorfulrawveggies-esp.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Papas asadas', 'Papas asadas hasta lograr una piel crujiente y un interior suave, sazonadas con hierbas finas y un toque de aceite de oliva.', 1000, 10, 13, 1, 'https://www.gourmet.cl/wp-content/uploads/2014/09/Papas-Asadas.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Arroz', 'Arroz blanco esponjoso, cocido a la perfecci�n, un b�sico indispensable para acompa�ar una variedad de platos.', 1000, 10, 13, 1, 'https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/05bab5cb-f8b6-487d-a509-f38031ea2708/Derivates/142b07d0-cedc-44f8-8569-e0222afab308.jpg');
+    ('Arroz', 'Arroz blanco esponjoso, cocido a la perfecciï¿½n, un bï¿½sico indispensable para acompaï¿½ar una variedad de platos.', 1000, 10, 13, 1, 'https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/05bab5cb-f8b6-487d-a509-f38031ea2708/Derivates/142b07d0-cedc-44f8-8569-e0222afab308.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Papas fritas', 'Papas fritas doradas y crujientes, cortadas a mano y fritas en aceite de alta calidad, con un toque de sal marina para realzar su sabor.', 1000, 10, 13, 1, 'https://phantom-marca.unidadeditorial.es/813d16708dc72860fd3cf319c9a245b5/resize/828/f/jpg/assets/multimedia/imagenes/2023/08/04/16911461030527.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Yuca Frita', 'Yuqitas a lo tico, fritas apenas para un gusto.', 1800, 10, 15, 1, 'https://mexicanappetizersandmore.com/wp-content/uploads/Yuca-Frita-1-12.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Patacones', 'Patacones cl�sicos con frijoles molidos y pico de gallo.', 1800, 10, 15, 1, 'https://images.hola.com/imagenes/cocina/recetas/20200320163599/receta-patacones-platano/0-800-862/patacones-adobe-m.jpg');
+    ('Patacones', 'Patacones clï¿½sicos con frijoles molidos y pico de gallo.', 1800, 10, 15, 1, 'https://images.hola.com/imagenes/cocina/recetas/20200320163599/receta-patacones-platano/0-800-862/patacones-adobe-m.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Aros de Cebolla', 'Aros de cebolla crujientes por fuera y por dentro!', 2200, 10, 15, 1, 'https://images.hola.com/imagenes/cocina/recetas/20220209204312/aros-cebolla-crujientes/1-49-243/aros-cebolla-adobe-t.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Papas Gajo', 'El estilo de papas favoritas de pap�, pide las que quieres.', 2200, 10, 15, 1, 'https://www.paulinacocina.net/wp-content/uploads/2023/11/receta-de-papas-gajo-Paulina-Cocina-Recetas.jpg');
+    ('Papas Gajo', 'El estilo de papas favoritas de papï¿½, pide las que quieres.', 2200, 10, 15, 1, 'https://www.paulinacocina.net/wp-content/uploads/2023/11/receta-de-papas-gajo-Paulina-Cocina-Recetas.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Papas Francesas', 'Papas fritas apenas para acompa�ar tu comida.', 1800, 10, 15, 1, 'https://www.paulinacocina.net/wp-content/uploads/2015/08/P1140112-e1439267676931.jpg');
+    ('Papas Francesas', 'Papas fritas apenas para acompaï¿½ar tu comida.', 1800, 10, 15, 1, 'https://www.paulinacocina.net/wp-content/uploads/2015/08/P1140112-e1439267676931.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Palitos de Queso', 'Palitos de queso mozzarella, de la mejor compa��a que puedas tener.', 2200, 10, 15, 1, 'https://mandolina.co/wp-content/uploads/2023/06/deditos-de-queso-1200x900.png');
+    ('Palitos de Queso', 'Palitos de queso mozzarella, de la mejor compaï¿½ï¿½a que puedas tener.', 2200, 10, 15, 1, 'https://mandolina.co/wp-content/uploads/2023/06/deditos-de-queso-1200x900.png');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
-    ('Gallos de salchich�n', 'Deliciosos gallos de salchich�n.', 2000, 10, 17, 1, 'https://tortiricascentroamerica.com/wp-content/uploads/2016/01/receta-tortiricas-gallitos-faciles.png');
+    ('Gallos de salchichï¿½n', 'Deliciosos gallos de salchichï¿½n.', 2000, 10, 17, 1, 'https://tortiricascentroamerica.com/wp-content/uploads/2016/01/receta-tortiricas-gallitos-faciles.png');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
     ('Gallos de Chorizo', 'Deliciosos gallos de chorizo.', 2000, 10, 17, 1, 'https://cloudfront-us-east-1.images.arcpublishing.com/gruponacion/QZ7BD6VNOVFFPDH7VAWWQTRFTY.jpg');
 INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, id_categoria, disponible, ruta_imagen) VALUES 
@@ -303,9 +303,9 @@ INSERT INTO usuarioDondePapa.plato (descripcion, detalle, precio, existencias, i
 INSERT INTO usuarioDondePapa.reservacion (nombre, hora, numero_de_mesa, contacto) VALUES 
     ('Juan', TO_DATE('14:30:00', 'HH24:MI:SS'), 1, '88269654');
 INSERT INTO usuarioDondePapa.reservacion (nombre, hora, numero_de_mesa, contacto) VALUES 
-    ('Mar�a', TO_DATE('13:00:00', 'HH24:MI:SS'), 2, '88269655');
+    ('Marï¿½a', TO_DATE('13:00:00', 'HH24:MI:SS'), 2, '88269655');
 INSERT INTO usuarioDondePapa.reservacion (nombre, hora, numero_de_mesa, contacto) VALUES 
-    ('Jos�', TO_DATE('20:00:00', 'HH24:MI:SS'), 3, '88269656');
+    ('Josï¿½', TO_DATE('20:00:00', 'HH24:MI:SS'), 3, '88269656');
 
 INSERT INTO usuarioDondePapa.usuario (username, password, nombre, apellidos, correo, telefono, ruta_imagen, activo) VALUES 
     ('juan', '$2a$12$RnK02njwwqKfsnWd1C8bAOfOsXQIZZbYkCbCkobm1ohrIYLqp2wTS', 'Juan', 'Castro Mora', 'jcastro@gmail.com', '4556-8978', 'https://img.freepik.com/foto-gratis/chico-guapo-seguro-posando-contra-pared-blanca_176420-32936.jpg', 1);
@@ -372,16 +372,17 @@ INSERT INTO usuarioDondePapa.venta (id_factura, id_plato, precio, cantidad) VALU
     (3, 10, 15000, 3);
 COMMIT;
 
+
 --------------------------------------------------------
 -- PROCEDIMIENTOS ALMACENADOS
 --------------------------------------------------------
 SET SERVEROUTPUT ON;
 
-// 1. Procedimiento para obtener los platos disponibles
+-- 1. Procedimiento para obtener los platos disponibles
 CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_DISPONIBLES 
 AS
 BEGIN
-    FOR platos_disponibles IN (SELECT descripcion FROM usuarioDondePapa.plato WHERE disponible = 1) LOOP
+    FOR platos_disponibles IN (SELECT descripcion FROM plato WHERE disponible = 1) LOOP
         DBMS_OUTPUT.PUT_LINE('Plato: ' || platos_disponibles.descripcion);
     END LOOP; 
 END;
@@ -390,7 +391,7 @@ EXEC OBTENER_PLATOS_DISPONIBLES;
 
 --------------------------------------------------------
 
-// 2. Procedimiento para calcular el total de una factura
+-- 2. Procedimiento para calcular el total de una factura
 CREATE OR REPLACE PROCEDURE CALCULAR_TOTAL_FACTURA (
     id_factura IN NUMBER,
     total OUT NUMBER
@@ -398,7 +399,7 @@ CREATE OR REPLACE PROCEDURE CALCULAR_TOTAL_FACTURA (
 AS
 BEGIN
     SELECT SUM(precio * cantidad) INTO total
-    FROM usuarioDondePapa.venta
+    FROM venta
     WHERE id_factura = id_factura;
 END;
 
@@ -418,7 +419,7 @@ CREATE OR REPLACE PROCEDURE OBTENER_FACTURAS_POR_USUARIO (
 ) 
 AS
 BEGIN
-    FOR facturas IN (SELECT * FROM usuarioDondePapa.factura WHERE id_usuario = id_usuario) LOOP
+    FOR facturas IN (SELECT * FROM factura WHERE id_usuario = id_usuario) LOOP
         DBMS_OUTPUT.PUT_LINE('ID Factura: ' || facturas.id_factura || ', Fecha: ' || facturas.fecha || ', Total: ' || facturas.total || ', Estado: ' || facturas.estado);
     END LOOP;
 END;
@@ -435,7 +436,7 @@ CREATE OR REPLACE PROCEDURE INSERTAR_CATEGORIA (
 ) 
 AS
 BEGIN
-    INSERT INTO usuarioDondePapa.categoria (descripcion, disponible, ruta_imagen)
+    INSERT INTO categoria (descripcion, disponible, ruta_imagen)
     VALUES (descripcion, disponible, ruta_imagen);
 END;
 
@@ -446,13 +447,13 @@ END;
 
 --------------------------------------------------------
 
-// 5. Procedimiento para obtener ventas por plato
+-- 5. Procedimiento para obtener ventas por plato
 CREATE OR REPLACE PROCEDURE OBTENER_VENTAS_POR_PLATO (
     id_plato IN NUMBER
 ) 
 AS
 BEGIN
-    FOR ventas IN (SELECT * FROM usuarioDondePapa.venta WHERE id_plato = id_plato) LOOP
+    FOR ventas IN (SELECT * FROM venta WHERE id_plato = id_plato) LOOP
         DBMS_OUTPUT.PUT_LINE('ID Venta: ' || ventas.id_venta || ', ID Factura: ' || ventas.id_factura || ', Precio: ' || ventas.precio || ', Cantidad: ' || ventas.cantidad);
     END LOOP;
 END;
@@ -461,7 +462,7 @@ EXEC OBTENER_VENTAS_POR_PLATO(1);
 
 --------------------------------------------------------
 
-// 6. Procedimiento para insertar un nuevo plato
+-- 6. Procedimiento para insertar un nuevo plato
 CREATE OR REPLACE PROCEDURE INSERTAR_PLATO (
     id_categoria IN NUMBER,
     descripcion IN VARCHAR2,
@@ -473,7 +474,7 @@ CREATE OR REPLACE PROCEDURE INSERTAR_PLATO (
 ) 
 AS
 BEGIN
-    INSERT INTO usuarioDondePapa.plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
+    INSERT INTO plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
     VALUES (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible);
 END;
 
@@ -483,7 +484,7 @@ END;
 
 --------------------------------------------------------
 
-// 7. Procedimiento para actualizar categoria
+-- 7. Procedimiento para actualizar categoria
 CREATE OR REPLACE PROCEDURE ACTUALIZAR_CATEGORIA (
     id_categoria IN NUMBER,
     descripcion IN VARCHAR2,
@@ -492,7 +493,7 @@ CREATE OR REPLACE PROCEDURE ACTUALIZAR_CATEGORIA (
 ) 
 AS
 BEGIN
-    UPDATE usuarioDondePapa.categoria
+    UPDATE categoria
     SET descripcion = descripcion,
         disponible = disponible,
         ruta_imagen = ruta_imagen
@@ -506,16 +507,15 @@ END;
 
 --------------------------------------------------------
 
-// 8. Procedimiento para eliminar una reservacion
+-- 8. Procedimiento para eliminar una reservacion
 CREATE OR REPLACE PROCEDURE ELIMINAR_RESERVACION (
-    id_reservacion IN NUMBER
+    p_id_reservacion IN NUMBER
 ) 
 AS
 BEGIN
-    DELETE FROM usuarioDondePapa.reservacion
-    WHERE reservacion = id_reservacion;
+    DELETE FROM reservacion
+    WHERE id_reservacion = p_id_reservacion;
 END;
-
 
 BEGIN
     ELIMINAR_RESERVACION(1);
@@ -523,7 +523,7 @@ END;
 
 --------------------------------------------------------
 
-// 9. Procedimiento para insertar nuevo plato
+-- 9. Procedimiento para insertar nuevo plato
 CREATE OR REPLACE PROCEDURE INSERTAR_NUEVO_PLATO (
     id_categoria IN NUMBER,
     descripcion IN VARCHAR2,
@@ -535,7 +535,7 @@ CREATE OR REPLACE PROCEDURE INSERTAR_NUEVO_PLATO (
 ) 
 AS
 BEGIN
-    INSERT INTO usuarioDondePapa.plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
+    INSERT INTO plato (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible)
     VALUES (id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible);
 END;
 
@@ -545,32 +545,36 @@ END;
 
 --------------------------------------------------------
 
-// 10. Procedimiento para eliminar un plato 
+-- 10. Procedimiento para eliminar un plato 
 CREATE OR REPLACE PROCEDURE ELIMINAR_PLATO (
-    id_plato IN NUMBER
+    p_id_plato IN NUMBER
 ) 
 AS
 BEGIN
-    DELETE FROM usuarioDondePapa.plato
-    WHERE id_plato = id_plato;
+    -- Primero, eliminar las referencias en la tabla ventas
+    DELETE FROM venta
+    WHERE id_plato = p_id_plato;
+
+    -- Luego, eliminar el plato en la tabla plato
+    DELETE FROM plato
+    WHERE id_plato = p_id_plato;
 END;
 
-
 BEGIN
-    ELIMINAR_PLATO(1);
+    ELIMINAR_PLATO(55);
 END;
 
 --------------------------------------------------------
 
-// 11. Procedimiento para obtener el total de ventas por usuario
+-- 11. Procedimiento para obtener el total de ventas por usuario
 CREATE OR REPLACE PROCEDURE OBTENER_TOTAL_VENTAS_POR_USUARIO (
     id_usuario IN NUMBER
 ) 
 AS
 BEGIN
     FOR ventas IN (SELECT f.id_usuario, SUM(v.precio * v.cantidad) AS total_ventas
-                   FROM usuarioDondePapa.venta v
-                   JOIN usuarioDondePapa.factura f ON v.id_factura = f.id_factura
+                   FROM venta v
+                   JOIN factura f ON v.id_factura = f.id_factura
                    WHERE f.id_usuario = id_usuario
                    GROUP BY f.id_usuario) LOOP
         DBMS_OUTPUT.PUT_LINE('ID Usuario: ' || ventas.id_usuario || ', Total Ventas: ' || ventas.total_ventas);
@@ -581,20 +585,471 @@ EXEC OBTENER_TOTAL_VENTAS_POR_USUARIO(1);
 
 --------------------------------------------------------
 
-// 12. Procedimiento para modificar la disponibilidad de un plato
+-- 12. Procedimiento para modificar la disponibilidad de un plato
 CREATE OR REPLACE PROCEDURE MODIFICAR_DISPONIBILIDAD_PLATO (
     id_plato IN NUMBER,
     disponible IN NUMBER
 ) 
 AS
 BEGIN
-    UPDATE usuarioDondePapa.plato
+    UPDATE plato
     SET disponible = disponible
     WHERE id_plato = id_plato;
 END;
 
 BEGIN
     MODIFICAR_DISPONIBILIDAD_PLATO(1, 0);
+END;
+
+
+--------------------------------------------------------
+
+-- 13. Filtrar por precion superior y inferior.
+CREATE OR REPLACE PROCEDURE FILTRAR_PLATOS_POR_PRECIO (
+    p_precio_inf IN NUMBER,
+    p_precio_sup IN NUMBER
+) 
+AS
+BEGIN
+    FOR r_plato IN (SELECT descripcion, precio 
+                    FROM plato 
+                    WHERE precio BETWEEN p_precio_inf AND p_precio_sup 
+                    ORDER BY descripcion ASC) 
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || r_plato.descripcion || ', Precio: ' || r_plato.precio);
+    END LOOP;
+END;
+
+BEGIN
+    -- Prueba del procedimiento con un rango de precios
+    FILTRAR_PLATOS_POR_PRECIO(1000, 5000);
+END;
+
+--------------------------------------------------------
+--14. Procedimiento para actualizar el precio de un plato.
+
+CREATE OR REPLACE PROCEDURE ACTUALIZAR_PRECIO_PLATO (
+    p_id_plato IN NUMBER,
+    p_nuevo_precio IN NUMBER
+) 
+AS
+BEGIN
+    UPDATE plato
+    SET precio = p_nuevo_precio
+    WHERE id_plato = p_id_plato;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para actualizar el precio de un plato específico
+    ACTUALIZAR_PRECIO_PLATO(
+        1,          -- ID del plato 
+        1500      -- Nuevo precio que asignar al plato
+    );
+END;
+
+
+SELECT * FROM plato WHERE id_plato = 1;
+
+--------------------------------------------------------
+--15. Procedimiento para obtener la lista de categorías disponibles
+CREATE OR REPLACE PROCEDURE OBTENER_CATEGORIAS_DISPONIBLES 
+AS
+BEGIN
+    FOR categorias IN (SELECT descripcion FROM categoria WHERE disponible = 1) LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || categorias.descripcion);
+    END LOOP;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para obtener las categorías disponibles
+    OBTENER_CATEGORIAS_DISPONIBLES;
+END;
+
+--------------------------------------------------------
+--16.  Procedimiento para contar el número de platos por categoría
+
+CREATE OR REPLACE PROCEDURE CONTAR_PLATOS_POR_CATEGORIA 
+AS
+BEGIN
+    FOR categoria IN (SELECT c.descripcion, COUNT(p.id_plato) AS numero_platos 
+                      FROM categoria c
+                      JOIN plato p ON c.id_categoria = p.id_categoria
+                      GROUP BY c.descripcion) LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || categoria.descripcion || ', Número de Platos: ' || categoria.numero_platos);
+    END LOOP;
+END;
+
+BEGIN
+    -- Ejecuta el procedimiento para contar los platos por categoría
+    CONTAR_PLATOS_POR_CATEGORIA;
+END;
+
+--------------------------------------------------------
+--17. Procedimiento para insertar un nuevo usuario
+
+CREATE OR REPLACE PROCEDURE INSERTAR_USUARIO (
+    p_username IN VARCHAR2,
+    p_password IN VARCHAR2,
+    p_nombre IN VARCHAR2,
+    p_apellidos IN VARCHAR2,
+    p_correo IN VARCHAR2,
+    p_telefono IN VARCHAR2,
+    p_ruta_imagen IN VARCHAR2,
+    p_activo IN NUMBER
+) 
+AS
+BEGIN
+    INSERT INTO usuario (username, password, nombre, apellidos, correo, telefono, ruta_imagen, activo)
+    VALUES (p_username, p_password, p_nombre, p_apellidos, p_correo, p_telefono, p_ruta_imagen, p_activo);
+END;
+
+BEGIN
+    -- Prueba del procedimiento insertando un nuevo usuario
+    INSERTAR_USUARIO(
+        'jdoe',                 -- Username del usuario
+        'password123',          -- Contraseña del usuario
+        'John',                 -- Nombre del usuario
+        'Doe',                  -- Apellidos del usuario
+        'john.doe@email.com',   -- Correo electrónico del usuario
+        '555-1234',             -- Teléfono del usuario
+        '/images/jdoe.png',     -- imagen del usuario
+        1                       -- Activo (1 = sí, 0 = no)
+    );
+END;
+
+
+SELECT * FROM usuario WHERE username = 'jdoe';
+
+
+
+BEGIN
+    -- Prueba del procedimiento insertando un nuevo usuario
+    INSERTAR_USUARIO(
+        'Juan Perez',           -- Nombre del usuario
+        'juan.perez@email.com', -- Correo electrónico del usuario
+        '555-1234',             -- Teléfono del usuario
+        'password123'           -- Contraseña del usuario
+    );
+END;
+
+
+SELECT * FROM usuario WHERE correo = 'juan.perez@email.com';
+
+--------------------------------------------------------
+--18. Procedimiento para eliminar una factura.
+CREATE OR REPLACE PROCEDURE ELIMINAR_FACTURA (
+    p_id_factura IN NUMBER
+) 
+AS
+BEGIN
+    -- Eliminar las ventas asociadas a la factura
+    DELETE FROM venta
+    WHERE id_factura = p_id_factura;
+
+    -- Eliminar la factura
+    DELETE FROM factura
+    WHERE id_factura = p_id_factura;
+END;
+
+BEGIN
+    -- Prueba del procedimiento eliminando una factura específica
+    ELIMINAR_FACTURA(1); 
+END;
+
+
+-- 19. Obtener Platos Más Vendidos
+CREATE OR REPLACE PROCEDURE OBTENER_PLATOS_MAS_VENDIDOS 
+AS
+BEGIN
+    FOR grupo_platos IN (
+        SELECT p.descripcion, SUM(v.cantidad) AS total_vendido
+        FROM plato p
+        JOIN venta v ON p.id_plato = v.id_plato
+        GROUP BY p.descripcion
+        ORDER BY total_vendido DESC
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Plato: ' || grupo_platos.descripcion || ', Total vendido: ' || grupo_platos.total_vendido);
+    END LOOP;
+END;
+
+
+--20. Obtener usuario más activos
+CREATE OR REPLACE PROCEDURE OBTENER_USUARIO_MAS_ACTIVO
+AS
+    nombre USUARIO.NOMBRE%TYPE;
+	apellidos USUARIO.APELLIDOS%TYPE;
+	total_compras NUMBER;
+BEGIN
+   SELECT nombre, apellidos, count_compras
+    INTO nombre, apellidos, total_compras
+    FROM (
+        SELECT u.nombre, u.apellidos, COUNT(f.id_factura) AS count_compras
+        FROM usuario u
+        JOIN factura f ON u.id_usuario = f.id_usuario
+        GROUP BY u.nombre, u.apellidos
+        ORDER BY count_compras DESC
+    )
+    WHERE ROWNUM = 1;
+
+    DBMS_OUTPUT.PUT_LINE('Usuario: ' || nombre || ' ' || apellidos || ', Total compras: ' || total_compras);
+END;
+
+--21. Generar reportes de ventas por categoría
+CREATE OR REPLACE PROCEDURE REPORTE_VENTAS_POR_CATEGORIAS
+AS
+BEGIN
+    FOR grupo_categorias IN (
+        SELECT c.descripcion, SUM(v.cantidad * v.precio) AS total_ventas
+        FROM categoria c
+        JOIN plato p ON c.id_categoria = p.id_categoria
+        JOIN venta v ON p.id_plato = v.id_plato
+        GROUP BY c.descripcion
+        ORDER BY total_ventas DESC
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Categoría: ' || grupo_categorias.descripcion || ', Total ventas: ' || grupo_categorias.total_ventas);
+    END LOOP;
+END;
+
+--22. Restablecer contraseña de usuario
+CREATE OR REPLACE PROCEDURE restablecer_contrasena (
+    v_usuario VARCHAR2,
+    p_nueva_contrasena VARCHAR2
+)
+AS
+BEGIN
+    UPDATE usuario
+    SET password = p_nueva_contrasena
+    WHERE username = v_usuario;
+END;
+
+BEGIN
+    restablecer_contrasena('allan','12345');
+END;
+
+--23. Modificar una reserva
+CREATE OR REPLACE PROCEDURE modificar_reserva (
+    id_reservacion_modificar NUMBER,
+    nueva_hora TIMESTAMP,
+    nuevo_numero_mesa NUMBER
+)
+AS
+	mesa_disponible NUMBER;
+BEGIN
+    SELECT COUNT(*)
+    INTO mesa_disponible
+    FROM reservacion
+    WHERE numero_de_mesa = nuevo_numero_mesa 
+    AND hora = nueva_hora;
+
+	IF mesa_disponible > 0 THEN
+    	RAISE_APPLICATION_ERROR(-20101, 'No se puede modificar la reservacion, porque ya existe una reservacion en ese horario');
+	ELSE 
+        UPDATE reservacion
+    	SET hora = nueva_hora, numero_de_mesa = nuevo_numero_mesa
+    	WHERE id_reservacion = id_reservacion_modificar;
+    END IF;
+END;
+
+BEGIN
+    modificar_reserva(1,TO_TIMESTAMP('2024-07-01 13:00:00', 'YYYY-MM-DD HH24:MI:SS'),2);
+END;
+
+--24. Obtener disponibilidad de mesas
+CREATE OR REPLACE PROCEDURE obtener_disponibilidad_mesas (
+    p_hora TIMESTAMP
+)
+AS
+BEGIN
+    FOR v_mesa IN (
+        SELECT numero_de_mesa
+        FROM mesa
+        WHERE numero_de_mesa NOT IN (
+            SELECT numero_de_mesa
+            FROM reservacion
+            WHERE hora BETWEEN p_hora - INTERVAL '1' HOUR AND p_hora + INTERVAL '1' HOUR
+        )
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Mesa disponible: ' || v_mesa.numero_de_mesa);
+    END LOOP;
+END;
+
+--25. Actualizar salarios en base a la cantidad de años laborados
+CREATE OR REPLACE PROCEDURE actualizar_salario_por_antiguedad
+IS
+BEGIN
+    UPDATE employees
+    SET salary = salary * 1.05
+    WHERE (SYSDATE - hire_date) / 365 BETWEEN 1 AND 5;
+
+    UPDATE employees
+    SET salary = salary * 1.10
+    WHERE (SYSDATE - hire_date) / 365 BETWEEN 6 AND 10;
+
+    UPDATE employees
+    SET salary = salary * 1.15
+    WHERE (SYSDATE - hire_date) / 365 > 10;
+    
+    DBMS_OUTPUT.PUT_LINE('Salarios actualizados en función de los años de servicio.');
+END;
+
+
+----------------------------------------------------
+/* 1- Trigger para controlar existencias de platos */
+----------------------------------------------------
+
+CREATE OR REPLACE TRIGGER trg_plato_update_stock
+  AFTER INSERT OR UPDATE OR DELETE
+  ON venta
+  FOR EACH ROW
+BEGIN
+  UPDATE PLATO
+  SET EXISTENCIAS = EXISTENCIAS - :NEW.CANTIDAD
+  WHERE ID_PLATO = :NEW.ID_PLATO;
+END;
+
+SELECT * FROM PLATO WHERE id_plato=5;
+INSERT INTO venta (id_factura, id_plato, precio, cantidad) VALUES (3, 5, 45000, 3);
+
+----------------------------------------------------
+/* 2- Trigger para controlar las ventas de platos segun stock */
+----------------------------------------------------
+
+CREATE OR REPLACE TRIGGER trg_verificar_stock
+  BEFORE INSERT OR UPDATE ON venta
+  FOR EACH ROW
+DECLARE
+  cantidad_en_stock NUMBER;
+BEGIN
+  SELECT EXISTENCIAS INTO cantidad_en_stock
+  FROM plato
+  WHERE id_plato = :NEW.id_plato;
+
+  IF :NEW.cantidad > cantidad_en_stock THEN
+    RAISE_APPLICATION_ERROR(-20001, 'No hay suficientes platos en stock para completar la venta.');
+  END IF;
+END;
+
+SELECT * FROM PLATO WHERE id_plato=4;
+INSERT INTO venta (id_factura, id_plato, precio, cantidad) VALUES (3, 4, 45000, 8);
+UPDATE plato
+SET existencias = 10 WHERE id_plato = 4;
+
+----------------------------------------------------
+/* 3- Trigger para registrar transacciones de facturas en estado 1 */
+----------------------------------------------------
+
+CREATE OR REPLACE TRIGGER TRG_FACTURA_TRANSACCION
+  AFTER INSERT OR UPDATE OF ESTADO
+  ON FACTURA
+  FOR EACH ROW
+BEGIN
+  IF :new.ESTADO = 1 THEN
+    INSERT INTO TRANSACCIONES (
+      ID_USUARIO,
+      TIPO,
+      MONTO,
+      FECHA,
+      DESCRIPCION
+    )
+    VALUES (
+      :new.ID_USUARIO,
+      'VENTA', -- Puedes ajustar el tipo según tus necesidades
+      :new.TOTAL,
+      SYSTIMESTAMP,
+      'Factura ' || :new.ID_FACTURA
+    );
+  END IF;
+END;
+
+SELECT * FROM factura;
+SELECT * FROM transacciones;
+UPDATE FACTURA
+SET ESTADO = 1
+WHERE ID_FACTURA=1;
+
+-----------------------------------------------------------------
+/* 4. Trigger auditoria de reservaciones eliminadas */
+-----------------------------------------------------------------
+
+CREATE TABLE RESERVACION_AUDIT (
+  ID_AUDITORIA NUMBER GENERATED BY DEFAULT AS IDENTITY,
+  ID_RESERVACION NUMBER,
+  NOMBRE VARCHAR2(255),
+  HORA TIMESTAMP(6),
+  NUMERO_DE_MESA NUMBER,
+  CONTACTO VARCHAR2(255),
+  FECHA_ELIMINACION TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+CREATE OR REPLACE TRIGGER TRG_RESERVACION_DELETE
+  AFTER DELETE
+  ON RESERVACION
+  FOR EACH ROW
+BEGIN
+  INSERT INTO RESERVACION_AUDIT (
+    ID_RESERVACION,
+    NOMBRE,
+    HORA,
+    NUMERO_DE_MESA,
+    CONTACTO,
+    FECHA_ELIMINACION
+  )
+  VALUES (
+    :OLD.ID_RESERVACION,
+    :OLD.NOMBRE,
+    :OLD.HORA,
+    :OLD.NUMERO_DE_MESA,
+    :OLD.CONTACTO,
+    SYSTIMESTAMP
+  );
+END;
+
+SELECT * FROM reservacion;
+DELETE reservacion WHERE id_reservacion=2;
+SELECT * FROM RESERVACION_AUDIT;
+
+-----------------------------------------------------------------
+/* 5. Trigger para evitar una reservacion si choca con otros horarios */
+-----------------------------------------------------------------
+CREATE OR REPLACE TRIGGER TRG_RESERVACION_UNIQUE
+  BEFORE INSERT OR UPDATE
+  ON RESERVACION
+  FOR EACH ROW
+DECLARE
+  count_reservaciones NUMBER;
+BEGIN
+  SELECT COUNT(*) 
+  INTO count_reservaciones
+  FROM RESERVACION
+  WHERE NUMERO_DE_MESA = :new.NUMERO_DE_MESA
+  AND HORA = :new.HORA;
+
+  IF count_reservaciones > 0 THEN
+    RAISE_APPLICATION_ERROR(-20005, 'Ya existe una reserva para esa mesa y hora.');
+  END IF;
+END;
+
+SELECT * FROM reservacion;
+
+-- Reserva válida
+BEGIN
+    INSERT INTO RESERVACION (nombre, hora, numero_de_mesa, contacto)
+    VALUES ('John Doe', TO_DATE('2024-08-25 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, '555-1234');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Inserción 1 fallida: ' || SQLERRM);
+END;
+
+--Reserva invalida
+BEGIN
+    INSERT INTO RESERVACION (nombre, hora, numero_de_mesa, contacto)
+    VALUES ('Jane Smith', TO_DATE('2024-08-25 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, '555-5678');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Inserción 2 fallida: ' || SQLERRM);
 END;
 
 --------------------------------------------------------
@@ -621,7 +1076,7 @@ WHERE
     
 --------------------------------------------------------
 
-// 2. Muestra informacion adicional sobre los usuarios que las realizaron.informaci�n adicional sobre los usuarios que las realizaron.
+// 2. Muestra informacion adicional sobre los usuarios que las realizaron.informaciï¿½n adicional sobre los usuarios que las realizaron.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_facturas_con_usuarios AS
 SELECT 
     f.id_factura,
@@ -639,7 +1094,7 @@ JOIN
     
 --------------------------------------------------------
     
-// 3. Esta vista muestra las ventas realizadas, incluyendo informaci�n del plato vendido y la factura asociada.
+// 3. Esta vista muestra las ventas realizadas, incluyendo informaciï¿½n del plato vendido y la factura asociada.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_ventas_detalles AS
 SELECT 
     v.id_venta,
@@ -673,7 +1128,7 @@ JOIN
 
 --------------------------------------------------------
 
-// 5. Esta vista muestra todas las reservaciones con informaci�n de contacto.
+// 5. Esta vista muestra todas las reservaciones con informaciï¿½n de contacto.
 CREATE OR REPLACE VIEW usuarioDondePapa.vista_reservaciones AS
 SELECT 
     r.id_reservacion,
@@ -830,7 +1285,7 @@ BEGIN
     LOOP
         FETCH productos_cursor INTO producto_record;
         EXIT WHEN productos_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || producto_record.ID_PLATO || ', Descripci�n: ' || producto_record.DESCRIPCION || ', Precio: ' || producto_record.PRECIO);
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || producto_record.ID_PLATO || ', Descripción: ' || producto_record.DESCRIPCION || ', Precio: ' || producto_record.PRECIO);
     END LOOP;
     CLOSE productos_cursor;
 END;
@@ -853,7 +1308,7 @@ BEGIN
     LOOP
         FETCH reservas_cursor INTO reserva_record;
         EXIT WHEN reservas_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Reserva: ' || reserva_record.ID_RESERVACION || ', Nombre: ' || reserva_record.NOMBRE || ', Hora: ' || reserva_record.HORA || ', N�mero de Mesa: ' || reserva_record.NUMERO_DE_MESA);
+        DBMS_OUTPUT.PUT_LINE('ID Reserva: ' || reserva_record.ID_RESERVACION || ', Nombre: ' || reserva_record.NOMBRE || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA);
     END LOOP;
     CLOSE reservas_cursor;
 END;
@@ -924,7 +1379,7 @@ BEGIN
     LOOP
         FETCH transacciones_cursor INTO transaccion_record;
         EXIT WHEN transacciones_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Transacci�n: ' || transaccion_record.ID_TRANSACCION || ', Monto: ' || transaccion_record.MONTO || ', Fecha: ' || transaccion_record.FECHA || ', Descripci�n: ' || transaccion_record.DESCRIPCION);
+        DBMS_OUTPUT.PUT_LINE('ID Transacción: ' || transaccion_record.ID_TRANSACCION || ', Monto: ' || transaccion_record.MONTO || ', Fecha: ' || transaccion_record.FECHA || ', Descripción: ' || transaccion_record.DESCRIPCION);
     END LOOP;
     CLOSE transacciones_cursor;
 END;
@@ -964,7 +1419,7 @@ BEGIN
     LOOP
         FETCH platos_cursor INTO plato_record;
         EXIT WHEN platos_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || plato_record.ID_PLATO || ', Descripci�n: ' || plato_record.DESCRIPCION || ', Precio: ' || plato_record.PRECIO || ', Existencias: ' || plato_record.EXISTENCIAS);
+        DBMS_OUTPUT.PUT_LINE('ID Plato: ' || plato_record.ID_PLATO || ', Descripción: ' || plato_record.DESCRIPCION || ', Precio: ' || plato_record.PRECIO || ', Existencias: ' || plato_record.EXISTENCIAS);
     END LOOP;
     CLOSE platos_cursor;
 END;
@@ -1008,7 +1463,7 @@ BEGIN
     LOOP
         FETCH reservas_cursor INTO reserva_record;
         EXIT WHEN reservas_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('ID Reservaci�n: ' || reserva_record.ID_RESERVACION || ', Hora: ' || reserva_record.HORA || ', N�mero de Mesa: ' || reserva_record.NUMERO_DE_MESA || ', Contacto: ' || reserva_record.CONTACTO);
+        DBMS_OUTPUT.PUT_LINE('ID Reservación: ' || reserva_record.ID_RESERVACION || ', Hora: ' || reserva_record.HORA || ', Número de Mesa: ' || reserva_record.NUMERO_DE_MESA || ', Contacto: ' || reserva_record.CONTACTO);
     END LOOP;
     CLOSE reservas_cursor;
 END;
@@ -1017,11 +1472,11 @@ END;
 -- FUNCIONES
 --------------------------------------------------------
 
--- 1. Obtener platos por categor�a especificada.
+-- 1. Obtener platos por categoría especificada.
 DROP FUNCTION OBTENER_PLATOS_X_CATEGORIA;
 
 CREATE OR REPLACE FUNCTION OBTENER_PLATOS_X_CATEGORIA (
-    id_categoria NUMBER -- Dependiendo del valor de la categoria, se mostrar�n x platos que pertenezcan a la misma.
+    id_categoria NUMBER -- Dependiendo del valor de la categoria, se mostrarán x platos que pertenezcan a la misma.
 )
 RETURN SYS_REFCURSOR
 AS
@@ -1030,7 +1485,7 @@ BEGIN
     OPEN platos_cursor FOR -- Se abre el cursor que empieza a obtener los datos.
         SELECT ruta_imagen, precio, descripcion, detalle -- Selecciona las columnas.
         FROM usuarioDondePapa.PLATO -- De la tabla PLATO.
-        WHERE id_categoria = id_categoria;  -- Donde todos coincidan con el mismo ID de categor�a.
+        WHERE id_categoria = id_categoria;  -- Donde todos coincidan con el mismo ID de categoría.
     RETURN platos_cursor; -- Y retorna el cursor con los datos para ser visualizados.
 END;
 
@@ -1046,7 +1501,7 @@ BEGIN
     LOOP
         FETCH v_cursor INTO v_ruta_imagen, v_precio, v_descripcion, v_detalle;
         EXIT WHEN v_cursor%NOTFOUND;
-        DBMS_OUTPUT.PUT_LINE('Descripci�n: ' || v_descripcion || CHR(10) ||
+        DBMS_OUTPUT.PUT_LINE('Descripción: ' || v_descripcion || CHR(10) ||
     'Precio: ' || v_precio || CHR(10) || 
     'Detalle: ' || v_detalle || CHR(10) ||
     'Ruta Imagen: ' || v_ruta_imagen || CHR(10));
