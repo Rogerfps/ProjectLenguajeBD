@@ -1718,8 +1718,9 @@ END;
 
 SELECT * FROM RESERVACION;
 
-SELECT VERIFICAR_DISPONIBILIDAD_MESA(2, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
+SELECT VERIFICAR_DISPONIBILIDAD_MESA(3, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
+
 SELECT VERIFICAR_DISPONIBILIDAD_MESA(5, TO_DATE('01-JUL-24', 'DD-MON-YY')) Disponibilidad
 FROM DUAL;
 
@@ -1770,8 +1771,6 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN
         RETURN 'No encontramos ese plato';
 END;
-
-DROP FUNCTION OBTENER_PLATO_X_ID;
 
 SELECT id_plato, descripcion FROM PLATO;
 
@@ -1998,8 +1997,6 @@ BEGIN
     END LOOP;
     CLOSE v_cursor;
 END; 
-    
-SELECT OBTENER_PLATOS_POPULARES(5) FROM DUAL;
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
@@ -2154,3 +2151,384 @@ BEGIN
     END LOOP;
     CLOSE v_cursor;
 END; 
+
+--------------------------------------------------------
+-- PAQUETES
+--------------------------------------------------------
+-- 1. CATEGORIAS
+CREATE OR REPLACE PACKAGE pckg_GESTION_CATEGORIAS AS
+
+    PROCEDURE INSERT_CATEGORIA (
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    );
+    
+    PROCEDURE UPDATE_CATEGORIA (
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    );
+    
+    PROCEDURE DELETE_CATEGORIA (
+        p_id_categoria IN NUMBER
+    );
+
+END pckg_GESTION_CATEGORIAS;
+
+-------------------- BODY --------------------------
+CREATE OR REPLACE PACKAGE BODY pckg_GESTION_CATEGORIAS AS
+
+    PROCEDURE INSERT_CATEGORIA(
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO CATEGORIA (DESCRIPCION, DISPONIBLE, RUTA_IMAGEN)
+        VALUES (p_descripcion, p_disponible, p_ruta_imagen);
+    END INSERT_CATEGORIA;
+    
+    PROCEDURE UPDATE_CATEGORIA(
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_disponible IN NUMBER,
+        p_ruta_imagen IN VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE CATEGORIA
+        SET DESCRIPCION = p_descripcion,
+            DISPONIBLE = p_disponible,
+            RUTA_IMAGEN = p_ruta_imagen
+        WHERE ID_CATEGORIA = p_id_categoria;
+    END UPDATE_CATEGORIA;
+    
+    PROCEDURE DELETE_CATEGORIA(
+        p_id_categoria IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM CATEGORIA
+        WHERE ID_CATEGORIA = p_id_categoria;
+    END DELETE_CATEGORIA;
+
+END pckg_GESTION_CATEGORIAS;
+
+---------------------------------------------------------
+-- INSERT
+SELECT * FROM CATEGORIA WHERE DESCRIPCION = 'Batidos';
+
+BEGIN
+    pckg_GESTION_CATEGORIAS.INSERT_CATEGORIA (
+        p_descripcion => 'Batidos',
+        p_disponible => 1,
+        p_ruta_imagen => 'images/batidos.jpg'
+    );
+END;
+
+-- UPDATE
+SELECT * FROM CATEGORIA WHERE DESCRIPCION = 'Batidos';
+
+BEGIN
+    pckg_GESTION_CATEGORIAS.UPDATE_CATEGORIA(
+        p_id_categoria => 42,
+        p_descripcion => 'Batidos',
+        p_disponible => 0,
+        p_ruta_imagen => 'imagenes/batidos.jpg'
+    );
+END;
+
+-- DELETE
+BEGIN
+    pckg_GESTION_CATEGORIAS.DELETE_CATEGORIA(
+        p_id_categoria => 42
+    );
+END;
+
+---------------------------------------------------------
+---------------------------------------------------------
+-- 2. PLATOS
+CREATE OR REPLACE PACKAGE pckg_GESTION_PLATOS AS
+    PROCEDURE INSERT_PLATO (
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_detalle IN VARCHAR2,
+        p_precio IN NUMBER,
+        p_existencias IN NUMBER,
+        p_ruta_imagen IN VARCHAR2,
+        p_disponible IN NUMBER
+    );
+
+    PROCEDURE UPDATE_PLATO (
+        p_id_plato IN NUMBER,
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_detalle IN VARCHAR2,
+        p_precio IN NUMBER,
+        p_existencias IN NUMBER,
+        p_ruta_imagen IN VARCHAR2,
+        p_disponible IN NUMBER
+    );
+
+    PROCEDURE DELETE_PLATO (
+        p_id_plato IN NUMBER
+    );
+
+END pckg_GESTION_PLATOS;
+-------------------- BODY --------------------------
+CREATE OR REPLACE PACKAGE BODY pckg_GESTION_PLATOS AS
+
+    PROCEDURE INSERT_PLATO (
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_detalle IN VARCHAR2,
+        p_precio IN NUMBER,
+        p_existencias IN NUMBER,
+        p_ruta_imagen IN VARCHAR2,
+        p_disponible IN NUMBER
+    ) IS
+    BEGIN
+        INSERT INTO PLATO (
+            id_categoria, descripcion, detalle, precio, existencias, ruta_imagen, disponible
+        ) VALUES (
+            p_id_categoria, p_descripcion, p_detalle, p_precio, p_existencias, p_ruta_imagen, p_disponible
+        );
+    END;
+
+    PROCEDURE UPDATE_PLATO (
+        p_id_plato IN NUMBER,
+        p_id_categoria IN NUMBER,
+        p_descripcion IN VARCHAR2,
+        p_detalle IN VARCHAR2,
+        p_precio IN NUMBER,
+        p_existencias IN NUMBER,
+        p_ruta_imagen IN VARCHAR2,
+        p_disponible IN NUMBER
+    ) IS
+    BEGIN
+        UPDATE PLATO
+        SET
+            ID_CATEGORIA = p_id_categoria,
+            DESCRIPCION = p_descripcion,
+            DETALLE = p_detalle,
+            PRECIO = p_precio,
+            EXISTENCIAS = p_existencias,
+            RUTA_IMAGEN = p_ruta_imagen,
+            DISPONIBLE = p_disponible
+        WHERE ID_PLATO = p_id_plato;
+    END;
+
+    PROCEDURE DELETE_PLATO (
+        p_id_plato IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM PLATO
+        WHERE ID_PLATO = p_id_plato;
+    END;
+
+END pckg_GESTION_PLATOS;
+
+---------------------------------------------------------
+---------------------------------------------------------
+-- 3. RESERVACIONES
+CREATE OR REPLACE PACKAGE PCKG_GESTION_RESERVACIONES AS
+
+    PROCEDURE INSERT_RESERVACION(
+        p_nombre IN VARCHAR2,
+        p_hora IN DATE,
+        p_numero_de_mesa IN NUMBER,
+        p_contacto IN VARCHAR2
+    );
+    
+    PROCEDURE UPDATE_RESERVACION(
+        p_id_reservacion IN NUMBER,
+        p_nombre IN VARCHAR2,
+        p_hora IN DATE,
+        p_numero_de_mesa IN NUMBER,
+        p_contacto IN VARCHAR2
+    );
+    
+    PROCEDURE DELETE_RESERVACION(
+        p_id_reservacion IN NUMBER
+    );
+    
+END PCKG_GESTION_RESERVACIONES;
+-------------------- BODY --------------------------
+CREATE OR REPLACE PACKAGE BODY PCKG_GESTION_RESERVACIONES AS
+
+    PROCEDURE INSERT_RESERVACION(
+        p_nombre IN VARCHAR2,
+        p_hora IN DATE,
+        p_numero_de_mesa IN NUMBER,
+        p_contacto IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO RESERVACION (
+            NOMBRE, HORA, NUMERO_DE_MESA, CONTACTO
+        ) VALUES (
+            p_nombre, p_hora, p_numero_de_mesa, p_contacto
+        );
+    END;
+
+    PROCEDURE UPDATE_RESERVACION(
+        p_id_reservacion IN NUMBER,
+        p_nombre IN VARCHAR2,
+        p_hora IN DATE,
+        p_numero_de_mesa IN NUMBER,
+        p_contacto IN VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE RESERVACION
+        SET NOMBRE = p_nombre,
+            HORA = p_hora,
+            NUMERO_DE_MESA = p_numero_de_mesa,
+            CONTACTO = p_contacto
+        WHERE ID_RESERVACION = p_id_reservacion;
+    END;
+
+    PROCEDURE DELETE_RESERVACION(
+        p_id_reservacion IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM RESERVACION
+        WHERE ID_RESERVACION = p_id_reservacion;
+    END;
+
+END PCKG_GESTION_RESERVACIONES;
+
+---------------------------------------------------------
+---------------------------------------------------------
+-- 4. 
+CREATE OR REPLACE PACKAGE PCKG_GESTION_USUARIO AS
+    PROCEDURE INSERT_USUARIO (
+        p_username IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_nombre IN VARCHAR2,
+        p_apellidos IN VARCHAR2,
+        p_correo IN VARCHAR2,
+        p_telefono IN VARCHAR2,
+        p_ruta_imagen IN VARCHAR2,
+        p_activo IN NUMBER
+    );
+
+    PROCEDURE UPDATE_USUARIO (
+        p_id_usuario IN NUMBER,
+        p_username IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_nombre IN VARCHAR2,
+        p_apellidos IN VARCHAR2,
+        p_correo IN VARCHAR2,
+        p_telefono IN VARCHAR2,
+        p_ruta_imagen IN VARCHAR2,
+        p_activo IN NUMBER
+    );
+
+    PROCEDURE DELETE_USUARIO (
+        p_id_usuario IN NUMBER
+    );
+
+END PCKG_GESTION_USUARIO;
+
+CREATE OR REPLACE PACKAGE BODY PCKG_GESTION_USUARIO AS
+    PROCEDURE INSERT_USUARIO (
+        p_username IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_nombre IN VARCHAR2,
+        p_apellidos IN VARCHAR2,
+        p_correo IN VARCHAR2,
+        p_telefono IN VARCHAR2,
+        p_ruta_imagen IN VARCHAR2,
+        p_activo IN NUMBER
+    ) IS
+    BEGIN
+        INSERT INTO USUARIO (
+            USERNAME, PASSWORD, NOMBRE, APELLIDOS, CORREO, TELEFONO, RUTA_IMAGEN, ACTIVO
+        ) VALUES (
+            p_username, p_password, p_nombre, p_apellidos, p_correo, p_telefono, p_ruta_imagen, p_activo
+        );
+    END;
+
+    PROCEDURE UPDATE_USUARIO (
+        p_id_usuario IN NUMBER,
+        p_username IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_nombre IN VARCHAR2,
+        p_apellidos IN VARCHAR2,
+        p_correo IN VARCHAR2,
+        p_telefono IN VARCHAR2,
+        p_ruta_imagen IN VARCHAR2,
+        p_activo IN NUMBER
+    ) IS
+    BEGIN
+        UPDATE USUARIO
+        SET
+            USERNAME = p_username,
+            PASSWORD = p_password,
+            NOMBRE = p_nombre,
+            APELLIDOS = p_apellidos,
+            CORREO = p_correo,
+            TELEFONO = p_telefono,
+            RUTA_IMAGEN = p_ruta_imagen,
+            ACTIVO = p_activo
+        WHERE ID_USUARIO = p_id_usuario;
+    END;
+
+    PROCEDURE DELETE_USUARIO (
+        p_id_usuario IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM USUARIO
+        WHERE id_usuario = p_id_usuario;
+    END;
+
+    FUNCTION OBTENER_USUARIO (
+        p_id_usuario IN NUMBER
+    ) RETURN usuarioDondePapa.usuario%ROWTYPE IS
+        v_usuario usuarioDondePapa.usuario%ROWTYPE;
+    BEGIN
+        SELECT * INTO v_usuario
+        FROM usuarioDondePapa.usuario
+        WHERE id_usuario = p_id_usuario;
+        RETURN v_usuario;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL;
+    END;
+
+    FUNCTION ES_USUARIO_ACTIVO (
+        p_id_usuario IN NUMBER
+    ) RETURN BOOLEAN IS
+        v_activo NUMBER;
+    BEGIN
+        SELECT activo INTO v_activo
+        FROM usuarioDondePapa.usuario
+        WHERE id_usuario = p_id_usuario;
+        RETURN (v_activo = 1);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN FALSE;
+    END;
+
+    FUNCTION OBTENER_USUARIOS_ACTIVOS RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT * FROM usuarioDondePapa.usuario
+        WHERE activo = 1;
+        RETURN v_cursor;
+    END;
+    
+END PCKG_GESTION_USUARIO;
+/
+
+
+
+
+
+
+
+
+
+
+
+
